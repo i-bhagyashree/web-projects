@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Student Attendance System</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+	<style>
+		:root {
+			--bg: #f5f9ef;
+			--card: #ffffff;
+			--text: #1d2a2a;
+			--muted: #5c6b6b;
+			--primary: #0c7b71;
+			--primary-dark: #085a53;
+			--accent: #ff8f3d;
+			--danger: #c53030;
+			--shadow: 0 18px 40px rgba(12, 123, 113, 0.12);
+			--radius: 18px;
+		}
+
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			min-height: 100vh;
+			font-family: "Manrope", sans-serif;
+			color: var(--text);
+			background:
+				radial-gradient(circle at 12% 12%, rgba(255, 143, 61, 0.28), transparent 26%),
+				radial-gradient(circle at 88% 2%, rgba(12, 123, 113, 0.22), transparent 22%),
+				linear-gradient(150deg, #f8fff4 0%, #edf8f6 58%, #f8f5ee 100%);
+			padding: 28px 14px 36px;
+		}
+
+		.container {
+			max-width: 1120px;
+			margin: 0 auto;
+			display: grid;
+			gap: 18px;
+			animation: riseUp 0.65s ease;
+		}
+
+		.hero {
+			background: linear-gradient(110deg, #0c7b71, #2a9d8f);
+			color: #f7fffc;
+			border-radius: calc(var(--radius) + 4px);
+			padding: 24px;
+			box-shadow: var(--shadow);
+			display: grid;
+			gap: 8px;
+		}
+
+		.hero h1 {
+			font-family: "Space Grotesk", sans-serif;
+			font-weight: 700;
+			letter-spacing: 0.4px;
+			line-height: 1.08;
+			font-size: clamp(1.7rem, 3.8vw, 2.6rem);
+		}
+
+		.hero p {
+			color: rgba(247, 255, 252, 0.9);
+			max-width: 760px;
+		}
+
+		.date-row {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			flex-wrap: wrap;
+			margin-top: 2px;
+		}
+
+		.date-row label {
+			font-weight: 600;
+			color: rgba(247, 255, 252, 0.9);
+		}
+
+		.date-row input {
+			border: 1px solid rgba(255, 255, 255, 0.4);
+			background: rgba(255, 255, 255, 0.14);
+			color: #f7fffc;
+			border-radius: 10px;
+			padding: 8px 10px;
+			font: inherit;
+		}
+
+		.grid {
+			display: grid;
+			gap: 18px;
+			grid-template-columns: 1.05fr 1.6fr;
+		}
+
+		.panel {
+			background: var(--card);
+			border-radius: var(--radius);
+			box-shadow: var(--shadow);
+			padding: 18px;
+			border: 1px solid #e6f0ea;
+		}
+
+		.panel h2 {
+			font-family: "Space Grotesk", sans-serif;
+			margin-bottom: 12px;
+			font-size: 1.22rem;
+			color: #173335;
+		}
+
+		.stack {
+			display: grid;
+			gap: 11px;
+		}
+
+		label {
+			font-weight: 600;
+			font-size: 0.92rem;
+			color: #2a3f3f;
+			display: grid;
+			gap: 6px;
+		}
+
+		input,
+		select,
+		button {
+			font: inherit;
+		}
+
+		input,
+		select {
+			width: 100%;
+			border: 1px solid #d5e4dc;
+			border-radius: 12px;
+			padding: 10px 12px;
+			background: #fdfefb;
+			color: var(--text);
+			transition: border-color 0.2s ease, box-shadow 0.2s ease;
+		}
+
+		input:focus,
+		select:focus {
+			outline: none;
+			border-color: var(--primary);
+			box-shadow: 0 0 0 3px rgba(12, 123, 113, 0.15);
+		}
+
+		.button-row {
+			display: flex;
+			gap: 10px;
+			flex-wrap: wrap;
+			margin-top: 3px;
+		}
+
+		.btn {
+			border: none;
+			border-radius: 12px;
+			padding: 10px 15px;
+			font-weight: 700;
+			cursor: pointer;
+			transition: transform 0.15s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+		}
+
+		.btn:hover {
+			transform: translateY(-1px);
+		}
+
+		.btn:active {
+			transform: translateY(1px);
+		}
+
+		.btn-primary {
+			background: var(--primary);
+			color: #f4fffc;
+			box-shadow: 0 8px 20px rgba(12, 123, 113, 0.28);
+		}
+
+		.btn-secondary {
+			background: #eef5f1;
+			color: #284445;
+		}
+
+		.btn-danger {
+			background: #fff2f1;
+			color: var(--danger);
+		}
+
+		.cards {
+			display: grid;
+			grid-template-columns: repeat(5, minmax(130px, 1fr));
+			gap: 10px;
+			margin-bottom: 12px;
+		}
+
+		.card {
+			border: 1px solid #e8f1ec;
+			border-radius: 14px;
+			padding: 12px;
+			background: linear-gradient(170deg, #fefefe, #f5fbf7);
+		}
+
+		.card p {
+			color: var(--muted);
+			font-size: 0.83rem;
+			margin-bottom: 6px;
+		}
+
+		.card strong {
+			font-family: "Space Grotesk", sans-serif;
+			font-size: 1.35rem;
+			line-height: 1;
+			color: #1d3738;
+		}
+
+		.table-wrap {
+			border: 1px solid #e4efe9;
+			border-radius: 14px;
+			overflow: auto;
+			background: #fff;
+		}
+
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			min-width: 700px;
+		}
+
+		th,
+		td {
+			padding: 12px;
+			text-align: left;
+			border-bottom: 1px solid #edf3f0;
+			font-size: 0.95rem;
+		}
+
+		th {
+			background: #f5fbf7;
+			color: #2d4a4b;
+			font-family: "Space Grotesk", sans-serif;
+			letter-spacing: 0.2px;
+		}
+
+		tr:hover td {
+			background: #fafffe;
+		}
+
+		.status {
+			display: inline-flex;
+			align-items: center;
+			padding: 5px 10px;
+			border-radius: 999px;
+			font-weight: 700;
+			font-size: 0.83rem;
+		}
+
+		.present {
+			background: #e2f8ef;
+			color: #0c7b71;
+		}
+
+		.absent {
+			background: #ffe9e6;
+			color: #b83232;
+		}
+
+		.not-marked {
+			background: #f2f4f6;
+			color: #607077;
+		}
+
+		.low-tag {
+			display: inline-flex;
+			align-items: center;
+			margin-left: 8px;
+			padding: 2px 8px;
+			font-size: 0.78rem;
+			font-weight: 700;
+			border-radius: 999px;
+			background: #fff0e2;
+			color: #b15a11;
+		}
+
+		.history-wrap {
+			margin-top: 14px;
+			border: 1px solid #e4efe9;
+			border-radius: 14px;
+			padding: 12px;
+			background: #fbfffd;
+		}
+
+		.history-wrap h3 {
+			font-family: "Space Grotesk", sans-serif;
+			font-size: 1rem;
+			margin-bottom: 4px;
+			color: #1f3b3d;
+		}
+
+		.history-title {
+			font-size: 0.9rem;
+			color: #456162;
+			margin-bottom: 10px;
+		}
+
+		.history-list {
+			list-style: none;
+			display: grid;
+			gap: 8px;
+		}
+
+		.history-list li {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 8px 10px;
+			border-radius: 10px;
+			background: #f3faf6;
+			font-size: 0.9rem;
+		}
+
+		.checkbox-row {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			font-size: 0.9rem;
+			font-weight: 600;
+			color: #335052;
+		}
+
+		.checkbox-row input {
+			width: auto;
+		}
+
+		.message {
+			font-size: 0.9rem;
+			min-height: 1.1rem;
+			color: #295355;
+		}
+
+		.message.error {
+			color: var(--danger);
+		}
+
+		@media (max-width: 930px) {
+			.grid {
+				grid-template-columns: 1fr;
+			}
+
+			.cards {
+				grid-template-columns: repeat(3, minmax(130px, 1fr));
+			}
+		}
+
+		@media (max-width: 520px) {
+			body {
+				padding: 16px 10px 20px;
+			}
+
+			.hero,
+			.panel {
+				padding: 14px;
+			}
+
+			.cards {
+				grid-template-columns: 1fr 1fr;
+			}
+
+			.btn {
+				flex: 1 1 100%;
+			}
+		}
+
+		@keyframes riseUp {
+			from {
+				transform: translateY(16px);
+				opacity: 0;
+			}
+
+			to {
+				transform: translateY(0);
+				opacity: 1;
+			}
+		}
+	</style>
+</head>
+<body>
+	<main class="container">
+		<section class="hero">
+			<h1>Student Attendance System</h1>
+			<p>Track attendance quickly, calculate live percentages, and keep student data safe in your browser with automatic local save.</p>
+			<div class="date-row">
+				<label for="attendanceDate">Class Date</label>
+				<input id="attendanceDate" type="date">
+			</div>
+		</section>
+
+		<section class="grid">
+			<article class="panel">
+				<h2>Add Student</h2>
+				<form id="studentForm" class="stack">
+					<label for="studentName">Student Name
+						<input id="studentName" type="text" placeholder="e.g. Aditi Sharma" maxlength="60" required>
+					</label>
+					<label for="studentRoll">Roll Number
+						<input id="studentRoll" type="text" placeholder="e.g. CSE-017" maxlength="20" required>
+					</label>
+					<label for="studentCourse">Course / Class
+						<input id="studentCourse" type="text" placeholder="e.g. BSc Computer Science" maxlength="60" required>
+					</label>
+					<div class="button-row">
+						<button class="btn btn-primary" type="submit">Add Student</button>
+						<button id="clearAllBtn" class="btn btn-danger" type="button">Clear All Data</button>
+					</div>
+					<p id="formMessage" class="message"></p>
+				</form>
+			</article>
+
+			<article class="panel">
+				<h2>Attendance Dashboard</h2>
+				<div class="cards">
+					<div class="card">
+						<p>Total Students</p>
+						<strong id="totalStudents">0</strong>
+					</div>
+					<div class="card">
+						<p>Present Today</p>
+						<strong id="presentCount">0</strong>
+					</div>
+					<div class="card">
+						<p>Absent Today</p>
+						<strong id="absentCount">0</strong>
+					</div>
+					<div class="card">
+						<p>Avg. Attendance</p>
+						<strong id="avgAttendance">0%</strong>
+					</div>
+					<div class="card">
+						<p>Not Marked</p>
+						<strong id="notMarkedCount">0</strong>
+					</div>
+				</div>
+
+				<div class="stack" style="margin-bottom: 12px;">
+					<label for="searchInput">Search Student
+						<input id="searchInput" type="search" placeholder="Search by name, roll or course">
+					</label>
+					<label class="checkbox-row" for="lowAttendanceOnly">
+						<input id="lowAttendanceOnly" type="checkbox">
+						Show only students below 75% attendance
+					</label>
+					<div class="button-row">
+						<button id="markAllPresentBtn" class="btn btn-secondary" type="button">Mark All Present</button>
+						<button id="markAllAbsentBtn" class="btn btn-secondary" type="button">Mark All Absent</button>
+						<button id="exportCsvBtn" class="btn btn-secondary" type="button">Export CSV</button>
+					</div>
+				</div>
+
+				<div class="table-wrap">
+					<table>
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Roll No.</th>
+								<th>Course</th>
+								<th>Today</th>
+								<th>Attendance</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody id="studentTableBody">
+							<tr>
+								<td colspan="6" style="text-align: center; color: #587172;">No students added yet.</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="history-wrap">
+					<h3>Student Attendance History</h3>
+					<p id="historyTitle" class="history-title">Select the History button for any student to view date-wise records.</p>
+					<ul id="historyList" class="history-list">
+						<li>
+							<span>No history selected.</span>
+							<span class="status not-marked">Pending</span>
+						</li>
+					</ul>
+				</div>
+			</article>
+		</section>
+	</main>
+
+	<script>
+		const STORAGE_KEY = "attendance-system-v1";
+
+		const studentForm = document.getElementById("studentForm");
+		const studentName = document.getElementById("studentName");
+		const studentRoll = document.getElementById("studentRoll");
+		const studentCourse = document.getElementById("studentCourse");
+		const formMessage = document.getElementById("formMessage");
+		const attendanceDate = document.getElementById("attendanceDate");
+		const studentTableBody = document.getElementById("studentTableBody");
+		const searchInput = document.getElementById("searchInput");
+
+		const totalStudentsEl = document.getElementById("totalStudents");
+		const presentCountEl = document.getElementById("presentCount");
+		const absentCountEl = document.getElementById("absentCount");
+		const avgAttendanceEl = document.getElementById("avgAttendance");
+		const notMarkedCountEl = document.getElementById("notMarkedCount");
+
+		const clearAllBtn = document.getElementById("clearAllBtn");
+		const markAllPresentBtn = document.getElementById("markAllPresentBtn");
+		const markAllAbsentBtn = document.getElementById("markAllAbsentBtn");
+		const exportCsvBtn = document.getElementById("exportCsvBtn");
+		const lowAttendanceOnly = document.getElementById("lowAttendanceOnly");
+		const historyTitle = document.getElementById("historyTitle");
+		const historyList = document.getElementById("historyList");
+
+		let students = [];
+
+		function todayIsoDate() {
+			const now = new Date();
+			return now.toISOString().split("T")[0];
+		}
+
+		function showMessage(message, isError = false) {
+			formMessage.textContent = message;
+			formMessage.classList.toggle("error", isError);
+		}
+
+		function escapeHtml(value) {
+			return String(value)
+				.replaceAll("&", "&amp;")
+				.replaceAll("<", "&lt;")
+				.replaceAll(">", "&gt;")
+				.replaceAll('"', "&quot;")
+				.replaceAll("'", "&#039;");
+		}
+
+		function getStatusForDate(student, date) {
+			if (!student.history || typeof student.history !== "object") {
+				return "not-marked";
+			}
+			return student.history[date] || "not-marked";
+		}
+
+		function loadData() {
+			const raw = localStorage.getItem(STORAGE_KEY);
+			if (!raw) {
+				students = [];
+				return;
+			}
+
+			try {
+				const parsed = JSON.parse(raw);
+				if (Array.isArray(parsed)) {
+					students = parsed.map((student) => ({
+						id: student.id || crypto.randomUUID(),
+						name: String(student.name || "").trim(),
+						roll: String(student.roll || "").trim(),
+						course: String(student.course || "").trim(),
+						totalClasses: Number(student.totalClasses) || 0,
+						presentClasses: Number(student.presentClasses) || 0,
+						statusToday: student.statusToday === "present" ? "present" : "absent",
+						lastDateMarked: String(student.lastDateMarked || ""),
+						history: student.history && typeof student.history === "object" ? student.history : {}
+					}));
+				}
+			} catch (error) {
+				students = [];
+			}
+		}
+
+		function saveData() {
+			localStorage.setItem(STORAGE_KEY, JSON.stringify(students));
+		}
+
+		function calculateAttendance(student) {
+			if (!student.totalClasses) {
+				return 0;
+			}
+			return Math.round((student.presentClasses / student.totalClasses) * 100);
+		}
+
+		function markForDate(student, status, date) {
+			if (!student.history || typeof student.history !== "object") {
+				student.history = {};
+			}
+
+			const previous = student.history[date];
+			if (!previous) {
+				student.totalClasses += 1;
+				if (status === "present") {
+					student.presentClasses += 1;
+				}
+			} else if (previous !== status) {
+				if (previous === "present" && status === "absent" && student.presentClasses > 0) {
+					student.presentClasses -= 1;
+				}
+				if (previous === "absent" && status === "present") {
+					student.presentClasses += 1;
+				}
+			}
+
+			student.history[date] = status;
+			student.statusToday = status;
+			student.lastDateMarked = date;
+		}
+
+		function renderSummary() {
+			totalStudentsEl.textContent = String(students.length);
+
+			const date = attendanceDate.value;
+			const presentToday = students.filter(
+				(student) => getStatusForDate(student, date) === "present"
+			).length;
+			const absentToday = students.filter(
+				(student) => getStatusForDate(student, date) === "absent"
+			).length;
+			const notMarkedToday = students.filter(
+				(student) => getStatusForDate(student, date) === "not-marked"
+			).length;
+
+			presentCountEl.textContent = String(presentToday);
+			absentCountEl.textContent = String(absentToday);
+			notMarkedCountEl.textContent = String(notMarkedToday);
+
+			if (!students.length) {
+				avgAttendanceEl.textContent = "0%";
+				return;
+			}
+
+			const average = Math.round(
+				students.reduce((acc, student) => acc + calculateAttendance(student), 0) / students.length
+			);
+			avgAttendanceEl.textContent = `${average}%`;
+		}
+
+		function renderTable() {
+			const query = searchInput.value.trim().toLowerCase();
+			const filteredStudents = students.filter((student) => {
+				const attendancePercent = calculateAttendance(student);
+				if (lowAttendanceOnly.checked && attendancePercent >= 75) {
+					return false;
+				}
+
+				if (!query) {
+					return true;
+				}
+
+				return (
+					student.name.toLowerCase().includes(query) ||
+					student.roll.toLowerCase().includes(query) ||
+					student.course.toLowerCase().includes(query)
+				);
+			});
+
+			if (!filteredStudents.length) {
+				studentTableBody.innerHTML = "<tr><td colspan='6' style='text-align: center; color: #587172;'>No matching students found.</td></tr>";
+				renderSummary();
+				return;
+			}
+
+			studentTableBody.innerHTML = filteredStudents
+				.map((student) => {
+					const attendancePercent = calculateAttendance(student);
+					const statusToday = getStatusForDate(student, attendanceDate.value);
+					const statusText = statusToday === "present" ? "Present" : statusToday === "absent" ? "Absent" : "Not Marked";
+					const statusClass = statusToday === "present" ? "present" : statusToday === "absent" ? "absent" : "not-marked";
+					const lowTag = attendancePercent < 75 ? "<span class='low-tag'>Low</span>" : "";
+
+					return `
+						<tr>
+							<td>${escapeHtml(student.name)}</td>
+							<td>${escapeHtml(student.roll)}</td>
+							<td>${escapeHtml(student.course)}</td>
+							<td>
+								<span class="status ${statusClass}">${statusText}</span>
+							</td>
+							<td>${attendancePercent}%${lowTag}</td>
+							<td>
+								<div class="button-row">
+									<button class="btn btn-secondary" type="button" onclick="updateStatus('${student.id}', 'present')">Present</button>
+									<button class="btn btn-danger" type="button" onclick="updateStatus('${student.id}', 'absent')">Absent</button>
+									<button class="btn btn-secondary" type="button" onclick="editStudent('${student.id}')">Edit</button>
+									<button class="btn btn-secondary" type="button" onclick="openHistory('${student.id}')">History</button>
+									<button class="btn btn-secondary" type="button" onclick="removeStudent('${student.id}')">Delete</button>
+								</div>
+							</td>
+						</tr>
+					`;
+				})
+				.join("");
+
+			renderSummary();
+		}
+
+		function resetForm() {
+			studentName.value = "";
+			studentRoll.value = "";
+			studentCourse.value = "";
+			studentName.focus();
+		}
+
+		function addStudent(event) {
+			event.preventDefault();
+
+			const name = studentName.value.trim();
+			const roll = studentRoll.value.trim();
+			const course = studentCourse.value.trim();
+
+			if (!name || !roll || !course) {
+				showMessage("Please fill in all fields.", true);
+				return;
+			}
+
+			const duplicateRoll = students.some((student) => student.roll.toLowerCase() === roll.toLowerCase());
+			if (duplicateRoll) {
+				showMessage("Roll number already exists. Use a unique roll number.", true);
+				return;
+			}
+
+			students.unshift({
+				id: crypto.randomUUID(),
+				name,
+				roll,
+				course,
+				totalClasses: 0,
+				presentClasses: 0,
+				statusToday: "absent",
+				lastDateMarked: "",
+				history: {}
+			});
+
+			saveData();
+			renderTable();
+			resetForm();
+			showMessage("Student added successfully.");
+		}
+
+		function updateStatus(studentId, status) {
+			const student = students.find((entry) => entry.id === studentId);
+			if (!student) {
+				return;
+			}
+
+			markForDate(student, status, attendanceDate.value);
+			saveData();
+			renderTable();
+			showMessage(`Attendance updated for ${student.name}.`);
+		}
+
+		function removeStudent(studentId) {
+			const target = students.find((entry) => entry.id === studentId);
+			if (!target) {
+				return;
+			}
+
+			students = students.filter((student) => student.id !== studentId);
+			saveData();
+			renderTable();
+			showMessage(`Removed ${target.name} from the list.`);
+		}
+
+		function editStudent(studentId) {
+			const target = students.find((entry) => entry.id === studentId);
+			if (!target) {
+				return;
+			}
+
+			const name = window.prompt("Edit student name:", target.name);
+			if (name === null) {
+				return;
+			}
+
+			const roll = window.prompt("Edit roll number:", target.roll);
+			if (roll === null) {
+				return;
+			}
+
+			const course = window.prompt("Edit course/class:", target.course);
+			if (course === null) {
+				return;
+			}
+
+			const updatedName = name.trim();
+			const updatedRoll = roll.trim();
+			const updatedCourse = course.trim();
+
+			if (!updatedName || !updatedRoll || !updatedCourse) {
+				showMessage("All fields are required while editing.", true);
+				return;
+			}
+
+			const duplicateRoll = students.some(
+				(student) => student.id !== studentId && student.roll.toLowerCase() === updatedRoll.toLowerCase()
+			);
+			if (duplicateRoll) {
+				showMessage("Another student already uses that roll number.", true);
+				return;
+			}
+
+			target.name = updatedName;
+			target.roll = updatedRoll;
+			target.course = updatedCourse;
+			saveData();
+			renderTable();
+			showMessage(`Student details updated for ${target.name}.`);
+		}
+
+		function openHistory(studentId) {
+			const target = students.find((entry) => entry.id === studentId);
+			if (!target) {
+				return;
+			}
+
+			historyTitle.textContent = `Attendance history for ${target.name} (${target.roll})`;
+			const entries = Object.entries(target.history || {}).sort((a, b) => b[0].localeCompare(a[0]));
+
+			if (!entries.length) {
+				historyList.innerHTML = `
+					<li>
+						<span>No history available for this student yet.</span>
+						<span class="status not-marked">Pending</span>
+					</li>
+				`;
+				return;
+			}
+
+			historyList.innerHTML = entries
+				.map(([date, status]) => `
+					<li>
+						<span>${date}</span>
+						<span class="status ${status === "present" ? "present" : "absent"}">${status === "present" ? "Present" : "Absent"}</span>
+					</li>
+				`)
+				.join("");
+		}
+
+		function csvCell(value) {
+			const safe = String(value).replaceAll('"', '""');
+			return `"${safe}"`;
+		}
+
+		function exportCsv() {
+			if (!students.length) {
+				showMessage("No student data to export.", true);
+				return;
+			}
+
+			const date = attendanceDate.value;
+			const header = [
+				"Name",
+				"Roll Number",
+				"Course",
+				"Today Status",
+				"Present Classes",
+				"Total Classes",
+				"Attendance %"
+			];
+
+			const rows = students.map((student) => {
+				const status = getStatusForDate(student, date);
+				const displayStatus = status === "not-marked" ? "Not Marked" : status;
+				return [
+					student.name,
+					student.roll,
+					student.course,
+					displayStatus,
+					student.presentClasses,
+					student.totalClasses,
+					`${calculateAttendance(student)}%`
+				];
+			});
+
+			const csv = [header, ...rows].map((row) => row.map(csvCell).join(",")).join("\n");
+			const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+			const link = document.createElement("a");
+			link.href = URL.createObjectURL(blob);
+			link.download = `attendance-${date}.csv`;
+			document.body.appendChild(link);
+			link.click();
+			document.body.removeChild(link);
+			URL.revokeObjectURL(link.href);
+			showMessage("Attendance CSV exported successfully.");
+		}
+
+		function markEveryone(status) {
+			if (!students.length) {
+				showMessage("Add at least one student first.", true);
+				return;
+			}
+
+			students.forEach((student) => markForDate(student, status, attendanceDate.value));
+			saveData();
+			renderTable();
+			showMessage(`All students marked as ${status}.`);
+		}
+
+		function clearAllData() {
+			if (!students.length) {
+				showMessage("No data available to clear.", true);
+				return;
+			}
+
+			const confirmed = window.confirm("Are you sure you want to delete all students and attendance records?");
+			if (!confirmed) {
+				return;
+			}
+
+			students = [];
+			saveData();
+			renderTable();
+			showMessage("All attendance data has been cleared.");
+		}
+
+		attendanceDate.value = todayIsoDate();
+		loadData();
+		renderTable();
+
+		studentForm.addEventListener("submit", addStudent);
+		searchInput.addEventListener("input", renderTable);
+		attendanceDate.addEventListener("change", renderTable);
+		lowAttendanceOnly.addEventListener("change", renderTable);
+		clearAllBtn.addEventListener("click", clearAllData);
+		markAllPresentBtn.addEventListener("click", () => markEveryone("present"));
+		markAllAbsentBtn.addEventListener("click", () => markEveryone("absent"));
+		exportCsvBtn.addEventListener("click", exportCsv);
+
+		window.updateStatus = updateStatus;
+		window.editStudent = editStudent;
+		window.openHistory = openHistory;
+		window.removeStudent = removeStudent;
+	</script>
+</body>
+</html>
