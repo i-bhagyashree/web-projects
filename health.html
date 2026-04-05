@@ -1,0 +1,1780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MediTrack Pro — Health Management System</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════
+   DESIGN TOKENS
+══════════════════════════════════════════ */
+:root {
+  --p:       #ff7a2f;
+  --p-dark:  #9c3f00;
+  --p-light: #fff0e6;
+  --p-glow:  rgba(255,122,47,0.24);
+  --accent:  #006a35;
+  --accent2: #f95630;
+  --accent3: #ebc729;
+  --bg:      #f1f8fa;
+  --bg2:     #eaf2f5;
+  --bg3:     #dae4e7;
+  --card:    #ffffff;
+  --card2:   #f6fbfd;
+  --card3:   #d4dfe2;
+  --border:  rgba(41,48,50,0.08);
+  --border2: rgba(41,48,50,0.16);
+  --text:    #293032;
+  --text2:   #565d5f;
+  --text3:   #71787a;
+  --success: #34D399;
+  --warning: #FCD34D;
+  --danger:  #F87171;
+  --info:    #60A5FA;
+
+  --radius-sm: 10px;
+  --radius:    16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+
+  --shadow-sm: 0 2px 8px rgba(41,48,50,0.06);
+  --shadow:    0 10px 26px rgba(41,48,50,0.08);
+  --shadow-lg: 0 16px 40px rgba(41,48,50,0.14);
+  --shadow-glow: 0 0 30px var(--p-glow);
+
+  --trans: all 0.22s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* ══════════════════════════════════════════
+   RESET & BASE
+══════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Be Vietnam Pro', system-ui, sans-serif;
+  background: radial-gradient(circle at 8% 0%, #fff4ea 0%, #f1f8fa 38%, #edf6f8 100%);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--card3); border-radius: 2px; }
+
+/* ══════════════════════════════════════════
+   TOPBAR
+══════════════════════════════════════════ */
+.topbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+  height: 62px;
+  background: rgba(241,248,250,0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; padding: 0 20px 0 0;
+  gap: 0;
+}
+.topbar-brand {
+  display: flex; align-items: center; gap: 11px;
+  padding: 0 20px; flex: 1;
+}
+.brand-icon {
+  width: 38px; height: 38px;
+  background: linear-gradient(135deg, var(--p), var(--p-dark));
+  border-radius: 11px;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 0 16px var(--p-glow);
+}
+.brand-icon .material-icons-round { font-size: 20px; color: #fff; }
+.brand-name { font-size: 1.05rem; font-weight: 800; letter-spacing: -0.02em; font-style: italic; }
+.brand-name span { color: var(--p); }
+.brand-tag { font-size: 0.65rem; color: var(--text3); font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; margin-top: 1px; }
+.brand-name, .page-head h2, .ct, .mc-val, .hero-greeting, .sdc-num, .hr-big, .profile-meta h2 { font-family: 'Plus Jakarta Sans', sans-serif; }
+.topbar-right { display: flex; align-items: center; gap: 8px; }
+.role-pill {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--card2);
+  border: 1px solid var(--border2);
+  border-radius: 20px;
+  padding: 6px 14px 6px 10px;
+  font-size: 0.78rem; font-weight: 600;
+  color: var(--text2); cursor: pointer;
+  transition: var(--trans);
+}
+.role-pill:hover { border-color: var(--p); color: var(--p); }
+.role-pill .material-icons-round { font-size: 15px; }
+.role-pill.doctor { border-color: var(--info); color: var(--info); background: rgba(96,165,250,0.1); }
+.notif-btn {
+  width: 36px; height: 36px; border-radius: 10px;
+  background: var(--card2); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: var(--trans);
+  position: relative;
+}
+.notif-btn:hover { border-color: var(--p); }
+.notif-btn .material-icons-round { font-size: 18px; color: var(--text2); }
+.notif-dot {
+  position: absolute; top: 7px; right: 7px;
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--p); border: 1.5px solid var(--bg);
+}
+
+/* ══════════════════════════════════════════
+   LAYOUT
+══════════════════════════════════════════ */
+.layout { display: flex; margin-top: 62px; }
+
+/* ══════════════════════════════════════════
+   SIDEBAR
+══════════════════════════════════════════ */
+.sidebar {
+  position: fixed; top: 62px; left: 0;
+  width: 72px; height: calc(100vh - 62px);
+  background: rgba(255,255,255,0.72);
+  border-right: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  align-items: center; padding: 16px 0; gap: 2px;
+  z-index: 200; overflow-y: auto;
+}
+.nav-item {
+  width: 52px; display: flex; flex-direction: column;
+  align-items: center; gap: 3px;
+  padding: 10px 0; border-radius: var(--radius-sm);
+  cursor: pointer; border: none; background: none;
+  color: var(--text3); font-family: 'Be Vietnam Pro', sans-serif;
+  transition: var(--trans); position: relative;
+}
+.nav-item .ni-icon {
+  width: 40px; height: 36px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  transition: var(--trans);
+}
+.nav-item .material-icons-round { font-size: 21px; }
+.nav-item .ni-label { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.02em; }
+.nav-item:hover { color: var(--text2); }
+.nav-item:hover .ni-icon { background: var(--card2); }
+.nav-item.active { color: var(--p); }
+.nav-item.active .ni-icon { background: rgba(255,122,47,0.14); }
+.nav-item::before {
+  content: ''; position: absolute; left: 0; top: 50%;
+  transform: translateY(-50%);
+  width: 3px; height: 0; border-radius: 0 2px 2px 0;
+  background: var(--p); transition: var(--trans);
+}
+.nav-item.active::before { height: 24px; }
+
+/* ══════════════════════════════════════════
+   MAIN
+══════════════════════════════════════════ */
+.main { margin-left: 72px; flex: 1; padding: 28px; max-width: 1180px; }
+.page { display: none; animation: fadeIn 0.25s ease; }
+.page.active { display: block; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
+
+/* ══════════════════════════════════════════
+   CARDS
+══════════════════════════════════════════ */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 22px 24px;
+  box-shadow: var(--shadow-sm);
+  transition: var(--trans);
+}
+.card:hover { border-color: var(--border2); box-shadow: var(--shadow); }
+.card.glow { box-shadow: var(--shadow-glow); border-color: rgba(255,122,47,0.24); }
+.card.glass {
+  background: rgba(255,255,255,0.75);
+  backdrop-filter: blur(20px);
+}
+
+.card-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 18px;
+}
+.card-title-group { display: flex; align-items: center; gap: 10px; }
+.card-icon {
+  width: 38px; height: 38px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.card-icon .material-icons-round { font-size: 19px; }
+.ct { font-size: 0.95rem; font-weight: 700; color: var(--text); }
+.cs { font-size: 0.75rem; color: var(--text3); margin-top: 1px; }
+
+/* ══════════════════════════════════════════
+   PAGE HEADER
+══════════════════════════════════════════ */
+.page-head { margin-bottom: 24px; }
+.page-head h2 { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.03em; }
+.page-head p { font-size: 0.85rem; color: var(--text3); margin-top: 3px; }
+.page-head h2 em { font-style: normal; color: var(--p); }
+
+/* ══════════════════════════════════════════
+   GRID UTILITIES
+══════════════════════════════════════════ */
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+.g-auto { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap: 12px; }
+.g-auto2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 14px; }
+.mb16 { margin-bottom: 16px; }
+.mb20 { margin-bottom: 20px; }
+.flex { display: flex; }
+.flex-center { display: flex; align-items: center; }
+.flex-col { display: flex; flex-direction: column; }
+.gap8  { gap: 8px; }
+.gap12 { gap: 12px; }
+.gap16 { gap: 16px; }
+.gap20 { gap: 20px; }
+.flex1 { flex: 1; }
+
+/* ══════════════════════════════════════════
+   BUTTONS
+══════════════════════════════════════════ */
+.btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 10px 20px; border-radius: 12px; border: none;
+  font-family: 'Be Vietnam Pro', sans-serif; font-size: 0.82rem; font-weight: 600;
+  cursor: pointer; transition: var(--trans); letter-spacing: 0.01em;
+}
+.btn .material-icons-round { font-size: 17px; }
+.btn-primary { background: linear-gradient(135deg, var(--p), var(--p-dark)); color: #fff; box-shadow: 0 4px 16px var(--p-glow); }
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 24px var(--p-glow); }
+.btn-secondary { background: var(--card2); color: var(--text2); border: 1px solid var(--border2); }
+.btn-secondary:hover { border-color: var(--p); color: var(--p); }
+.btn-ghost { background: transparent; color: var(--text3); border: 1px solid var(--border); }
+.btn-ghost:hover { background: var(--card2); color: var(--text); }
+.btn-danger { background: rgba(248,113,113,0.12); color: var(--danger); border: 1px solid rgba(248,113,113,0.2); }
+.btn-danger:hover { background: rgba(248,113,113,0.2); }
+.btn-sm { padding: 7px 14px; font-size: 0.77rem; border-radius: 9px; }
+.btn-icon { width: 36px; height: 36px; padding: 0; border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+
+/* ══════════════════════════════════════════
+   INPUTS
+══════════════════════════════════════════ */
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-size: 0.72rem; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; }
+.input, .select {
+  background: var(--bg2); border: 1.5px solid var(--border2);
+  border-radius: 11px; padding: 11px 14px;
+  color: var(--text); font-family: 'Be Vietnam Pro', sans-serif; font-size: 0.88rem;
+  outline: none; transition: var(--trans); width: 100%;
+}
+.input:focus, .select:focus { border-color: var(--p); box-shadow: 0 0 0 3px rgba(255,122,47,0.12); }
+.input::placeholder { color: var(--text3); }
+.input-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px,1fr)); gap: 14px; }
+.input-grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+/* ══════════════════════════════════════════
+   BADGES
+══════════════════════════════════════════ */
+.badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 9px; border-radius: 20px;
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+}
+.badge-success { background: rgba(52,211,153,0.12); color: var(--success); }
+.badge-warning { background: rgba(252,211,77,0.12); color: var(--warning); }
+.badge-danger  { background: rgba(248,113,113,0.12); color: var(--danger); }
+.badge-info    { background: rgba(96,165,250,0.12);  color: var(--info); }
+.badge-muted   { background: var(--card2); color: var(--text3); }
+.badge-teal    { background: rgba(255,122,47,0.14); color: var(--p); }
+
+/* ══════════════════════════════════════════
+   DIVIDER
+══════════════════════════════════════════ */
+.divider { height: 1px; background: var(--border); margin: 18px 0; }
+
+/* ══════════════════════════════════════════
+   ── DASHBOARD ──
+══════════════════════════════════════════ */
+.dash-hero {
+  background: linear-gradient(135deg, #ffffff 0%, #fff2e8 62%, #eef8f3 100%);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 28px 32px;
+  margin-bottom: 20px;
+  position: relative; overflow: hidden;
+  box-shadow: 0 20px 36px rgba(41,48,50,0.08);
+}
+.dash-hero::before {
+  content: '';
+  position: absolute; top: -60px; right: -60px;
+  width: 240px; height: 240px;
+  background: radial-gradient(circle, rgba(255,122,47,0.14) 0%, transparent 70%);
+  pointer-events: none;
+}
+.dash-hero::after {
+  content: '';
+  position: absolute; bottom: -80px; left: 30%;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(129,140,248,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-greeting { font-size: 1.7rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 4px; }
+.hero-greeting span { color: var(--p); }
+.hero-sub { font-size: 0.85rem; color: var(--text3); }
+.hero-stats { display: flex; gap: 24px; margin-top: 20px; flex-wrap: wrap; }
+.hero-stat { display: flex; flex-direction: column; gap: 2px; }
+.hero-stat-val { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.03em; }
+.hero-stat-lbl { font-size: 0.7rem; color: var(--text3); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+.hero-right { position: absolute; right: 32px; top: 50%; transform: translateY(-50%); }
+
+/* Metric cards */
+.metric-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 18px 20px;
+  position: relative; overflow: hidden;
+  transition: var(--trans); cursor: default;
+}
+.metric-card:hover { transform: translateY(-2px); border-color: var(--border2); box-shadow: var(--shadow); }
+.metric-card .stripe {
+  position: absolute; top: 0; left: 0; right: 0; height: 2px; border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+.mc-icon { width: 40px; height: 40px; border-radius: 11px; display: flex; align-items: center; justify-content: center; margin-bottom: 14px; }
+.mc-icon .material-icons-round { font-size: 20px; }
+.mc-val { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.04em; line-height: 1; }
+.mc-lbl { font-size: 0.7rem; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+.mc-sub { font-size: 0.72rem; color: var(--text3); margin-top: 8px; display: flex; align-items: center; gap: 4px; }
+.mc-sub .material-icons-round { font-size: 11px; }
+
+/* Step ring mini */
+.step-mini-ring { position: relative; width: 52px; height: 52px; margin-left: auto; }
+.step-mini-ring svg { transform: rotate(-90deg); }
+
+/* ══════════════════════════════════════════
+   ── BMI ──
+══════════════════════════════════════════ */
+.bmi-result { display: none; margin-top: 20px; }
+.bmi-hero {
+  border-radius: var(--radius-lg);
+  padding: 28px 32px;
+  display: flex; align-items: center; gap: 32px; flex-wrap: wrap;
+  position: relative; overflow: hidden;
+  margin-bottom: 16px;
+}
+.bmi-hero::before {
+  content: ''; position: absolute; inset: 0; border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, #fff5ec 0%, #eff8ff 48%, #ecf8f1 100%);
+}
+.bmi-hero > * { position: relative; z-index: 1; }
+.bmi-score { text-align: center; }
+.bmi-circle {
+  width: 120px; height: 120px; border-radius: 50%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  border: 3px solid rgba(41,48,50,0.1);
+  background: rgba(255,255,255,0.8);
+}
+.bmi-num { font-size: 2.4rem; font-weight: 900; letter-spacing: -0.04em; }
+.bmi-unit { font-size: 0.72rem; color: var(--text3); }
+.bmi-info { flex: 1; min-width: 200px; }
+.bmi-cat { font-size: 1.4rem; font-weight: 800; margin-bottom: 6px; }
+.bmi-desc { font-size: 0.85rem; color: var(--text2); line-height: 1.6; }
+.bmi-pills { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+.bmi-pill {
+  background: rgba(255,255,255,0.7); border-radius: 20px;
+  border: 1px solid var(--border);
+  padding: 4px 12px; font-size: 0.75rem; font-weight: 600; color: var(--text2);
+}
+
+/* BMI gauge arc */
+.bmi-arc-wrap {
+  position: relative; width: 260px; height: 140px; margin: 0 auto 12px;
+}
+.bmi-arc-wrap svg { overflow: visible; }
+.bmi-arc-needle {
+  transform-origin: 130px 140px;
+  transition: transform 0.8s cubic-bezier(0.34,1.56,0.64,1);
+}
+.bmi-range-labels {
+  display: flex; justify-content: space-between;
+  font-size: 0.68rem; color: var(--text3); font-weight: 600; margin-top: 4px;
+}
+
+/* Advice items */
+.advice-list { display: flex; flex-direction: column; gap: 10px; }
+.advice-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  background: var(--card2); border-radius: 12px; padding: 13px 15px;
+  border: 1px solid var(--border);
+}
+.advice-item .ai-icon {
+  width: 32px; height: 32px; border-radius: 9px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255,122,47,0.12);
+}
+.advice-item .ai-icon .material-icons-round { font-size: 16px; color: var(--p); }
+.advice-item .ai-text { font-size: 0.83rem; color: var(--text2); line-height: 1.55; }
+.advice-item strong { color: var(--text); font-weight: 600; }
+
+/* ══════════════════════════════════════════
+   ── STEPS ──
+══════════════════════════════════════════ */
+.step-hero-card {
+  background: linear-gradient(135deg, #ffffff 0%, #fff3ea 68%, #eef9f6 100%);
+  border: 1px solid rgba(255,122,47,0.2);
+  border-radius: var(--radius-xl);
+  padding: 32px;
+  display: flex; align-items: center; gap: 48px; flex-wrap: wrap;
+  margin-bottom: 16px;
+  box-shadow: 0 16px 40px rgba(255,122,47,0.12);
+}
+.step-donut { position: relative; width: 190px; height: 190px; flex-shrink: 0; }
+.step-donut svg { position: absolute; inset: 0; transform: rotate(-90deg); }
+.step-donut svg circle { fill: none; stroke-linecap: round; }
+.step-donut-track { stroke: rgba(41,48,50,0.08); }
+.step-donut-fill { stroke: url(#stepGrad); transition: stroke-dashoffset 0.6s cubic-bezier(0.4,0,0.2,1); }
+.step-donut-center {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.sdc-num { font-size: 2.6rem; font-weight: 900; letter-spacing: -0.05em; color: var(--text); line-height: 1; }
+.sdc-of  { font-size: 0.72rem; color: var(--text3); margin-top: 2px; }
+.sdc-pct { font-size: 0.9rem; font-weight: 700; color: var(--p); margin-top: 4px; }
+
+.step-details { flex: 1; min-width: 200px; display: flex; flex-direction: column; gap: 20px; }
+.step-stats-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+.sstat {
+  background: rgba(255,255,255,0.7); border: 1px solid var(--border);
+  border-radius: 14px; padding: 14px 12px; text-align: center;
+}
+.sstat-val { font-size: 1.3rem; font-weight: 800; color: var(--p); letter-spacing: -0.03em; }
+.sstat-lbl { font-size: 0.67rem; color: var(--text3); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 2px; }
+.step-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+.step-sensor { font-size: 0.76rem; color: var(--text3); display: flex; align-items: center; gap: 6px; }
+.pulse-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--success); animation: pulse-anim 1.5s ease infinite;
+}
+@keyframes pulse-anim {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.7); }
+}
+.pulse-dot.off { background: var(--text3); animation: none; }
+
+/* ══════════════════════════════════════════
+   ── HEART RATE ──
+══════════════════════════════════════════ */
+.hr-main-card {
+  background: linear-gradient(135deg, #ffffff 0%, #fff2f2 50%, #fff8f2 100%);
+  border: 1px solid rgba(248,113,113,0.24);
+  border-radius: var(--radius-xl);
+  padding: 28px 32px;
+  margin-bottom: 16px;
+  position: relative; overflow: hidden;
+}
+.hr-main-card::before {
+  content: ''; position: absolute; top: -40px; right: -40px;
+  width: 180px; height: 180px;
+  background: radial-gradient(circle, rgba(248,113,113,0.12) 0%, transparent 70%);
+}
+.hr-top { display: flex; align-items: flex-start; gap: 24px; flex-wrap: wrap; position: relative; z-index: 1; }
+.hr-left { display: flex; flex-direction: column; gap: 8px; }
+.heart-emoji { font-size: 4rem; line-height: 1; animation: hb 1s ease infinite; display: inline-block; }
+@keyframes hb {
+  0%,100%{transform:scale(1)} 14%{transform:scale(1.3)} 28%{transform:scale(1)} 42%{transform:scale(1.15)}
+}
+.hr-bpm-row { display: flex; align-items: baseline; gap: 8px; }
+.hr-big { font-size: 4.5rem; font-weight: 900; color: var(--danger); letter-spacing: -0.06em; line-height: 1; font-family: 'JetBrains Mono', monospace; }
+.hr-bpm-unit { font-size: 1.1rem; color: var(--text3); }
+.hr-zone-label { font-size: 0.9rem; font-weight: 600; }
+.hr-ecg {
+  flex: 1; min-width: 200px;
+  background: rgba(41,48,50,0.08); border-radius: 14px;
+  overflow: hidden; position: relative; height: 90px;
+}
+canvas#hrECG { display: block; width: 100%; height: 100%; }
+.ecg-label {
+  position: absolute; top: 8px; right: 10px;
+  font-size: 0.65rem; color: rgba(248,113,113,0.5);
+  font-family: 'JetBrains Mono', monospace; font-weight: 500;
+}
+
+/* Zones */
+.zone-cards { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; }
+.zone-card {
+  background: var(--card2); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 14px;
+  transition: var(--trans);
+}
+.zone-card.active-zone { border-color: rgba(255,255,255,0.2); }
+.zone-dot { width: 8px; height: 8px; border-radius: 50%; margin-bottom: 8px; }
+.zone-name { font-size: 0.8rem; font-weight: 700; margin-bottom: 2px; }
+.zone-range { font-size: 0.7rem; color: var(--text3); margin-bottom: 8px; }
+.zone-bar-bg { height: 4px; background: rgba(41,48,50,0.08); border-radius: 2px; }
+.zone-bar { height: 100%; border-radius: 2px; transition: width 0.4s ease; width: 0%; }
+
+/* ══════════════════════════════════════════
+   ── WEIGHT ──
+══════════════════════════════════════════ */
+.weight-chart-wrap {
+  background: var(--bg2); border-radius: 14px;
+  overflow: hidden; height: 150px; margin-bottom: 16px;
+}
+canvas#wtChart { width: 100%; height: 100%; display: block; }
+
+.weight-entry {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--card2); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 13px 16px;
+  transition: var(--trans);
+}
+.weight-entry:hover { border-color: var(--border2); }
+.we-ring {
+  width: 42px; height: 42px; border-radius: 12px;
+  background: rgba(255,122,47,0.12);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.we-ring .material-icons-round { font-size: 19px; color: var(--p); }
+.we-val { font-size: 1rem; font-weight: 700; }
+.we-date { font-size: 0.74rem; color: var(--text3); margin-top: 1px; }
+.we-diff { font-size: 0.78rem; font-weight: 700; display: flex; align-items: center; gap: 2px; }
+.we-diff .material-icons-round { font-size: 13px; }
+.we-list { display: flex; flex-direction: column; gap: 8px; max-height: 300px; overflow-y: auto; }
+
+/* Empty state */
+.empty-state {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 48px 24px; color: var(--text3); text-align: center;
+}
+.empty-state .material-icons-round { font-size: 52px; margin-bottom: 10px; opacity: 0.25; }
+.empty-state p { font-size: 0.85rem; line-height: 1.6; }
+
+/* ══════════════════════════════════════════
+   ── MEDIBOT ──
+══════════════════════════════════════════ */
+.chat-layout { display: grid; grid-template-columns: 1fr 250px; gap: 16px; }
+.chat-panel { display: flex; flex-direction: column; gap: 12px; }
+
+.chat-win {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  height: 420px; overflow-y: auto; padding: 18px;
+  display: flex; flex-direction: column; gap: 14px;
+}
+.bubble { max-width: 82%; display: flex; flex-direction: column; gap: 3px; }
+.bubble.bot { align-self: flex-start; }
+.bubble.user { align-self: flex-end; }
+.bubble-from { font-size: 0.65rem; font-weight: 700; color: var(--text3); padding: 0 4px; letter-spacing: 0.04em; text-transform: uppercase; }
+.bubble.bot .bubble-from { color: var(--p); }
+.bubble-body {
+  padding: 12px 15px; font-size: 0.85rem; line-height: 1.65;
+  border-radius: 4px 16px 16px 16px;
+  background: var(--card2); color: var(--text);
+  border: 1px solid var(--border);
+}
+.bubble.user .bubble-body {
+  background: linear-gradient(135deg, var(--p-dark), var(--p));
+  color: #fff; border: none;
+  border-radius: 16px 16px 4px 16px;
+}
+.typing-dots { display: flex; gap: 4px; padding: 4px 0; }
+.typing-dots span {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--text3); animation: typing 1.2s ease infinite;
+}
+.typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+.typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes typing { 0%,80%,100%{transform:translateY(0);opacity:0.4} 40%{transform:translateY(-6px);opacity:1} }
+
+.chat-bar {
+  display: flex; gap: 8px; align-items: center;
+  background: var(--card2); border: 1.5px solid var(--border2);
+  border-radius: 14px; padding: 7px 8px 7px 16px;
+  transition: var(--trans);
+}
+.chat-bar:focus-within { border-color: var(--p); box-shadow: 0 0 0 3px rgba(255,122,47,0.12); }
+.chat-bar input {
+  flex: 1; border: none; background: none; outline: none;
+  font-family: 'Be Vietnam Pro', sans-serif; font-size: 0.88rem; color: var(--text);
+}
+.chat-bar input::placeholder { color: var(--text3); }
+.send-btn {
+  width: 38px; height: 38px; border-radius: 11px; border: none;
+  background: linear-gradient(135deg, var(--p), var(--p-dark));
+  color: #fff; cursor: pointer; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: var(--trans); box-shadow: 0 2px 10px var(--p-glow);
+}
+.send-btn:hover { transform: scale(1.06); }
+.send-btn .material-icons-round { font-size: 18px; }
+
+.topics-panel { display: flex; flex-direction: column; gap: 8px; }
+.topics-label { font-size: 0.67rem; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
+.topic-btn {
+  display: flex; align-items: center; gap: 9px;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 11px; padding: 9px 12px;
+  font-family: 'Be Vietnam Pro', sans-serif; font-size: 0.78rem; font-weight: 500;
+  color: var(--text2); cursor: pointer; text-align: left;
+  transition: var(--trans); width: 100%;
+}
+.topic-btn:hover { border-color: var(--p); color: var(--p); background: rgba(255,122,47,0.08); }
+.topic-btn .material-icons-round { font-size: 15px; color: var(--p); flex-shrink: 0; }
+
+.disclaimer {
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(252,211,77,0.06); border: 1px solid rgba(252,211,77,0.15);
+  border-radius: 11px; padding: 10px 14px;
+  font-size: 0.75rem; color: var(--warning);
+  font-weight: 500; margin-bottom: 12px;
+}
+.disclaimer .material-icons-round { font-size: 15px; flex-shrink: 0; }
+
+/* ══════════════════════════════════════════
+   ── PROFILE ──
+══════════════════════════════════════════ */
+.profile-hero {
+  background: linear-gradient(135deg, #ffffff 0%, #fff3ea 70%, #eef8f2 100%);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 28px 32px;
+  display: flex; align-items: center; gap: 24px; flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.avatar {
+  width: 70px; height: 70px; border-radius: 20px;
+  background: linear-gradient(135deg, var(--p-dark), var(--p));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.8rem; font-weight: 800; color: #fff;
+  box-shadow: 0 0 20px var(--p-glow); flex-shrink: 0;
+}
+.profile-meta h2 { font-size: 1.3rem; font-weight: 800; }
+.profile-meta p { font-size: 0.82rem; color: var(--text3); margin-top: 3px; }
+.profile-chips { display: flex; gap: 7px; margin-top: 10px; flex-wrap: wrap; }
+
+/* ══════════════════════════════════════════
+   TOAST / SNACKBAR
+══════════════════════════════════════════ */
+.toast {
+  position: fixed; bottom: 24px; right: 24px; z-index: 999;
+  background: var(--card);
+  border: 1px solid var(--border2);
+  border-radius: 14px;
+  padding: 13px 18px;
+  font-size: 0.83rem; font-weight: 500;
+  display: flex; align-items: center; gap: 10px;
+  box-shadow: var(--shadow-lg);
+  transform: translateY(80px); opacity: 0;
+  transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+  max-width: 320px;
+}
+.toast.show { transform: translateY(0); opacity: 1; }
+.toast-icon { font-size: 17px; }
+.toast-dismiss { margin-left: auto; background: none; border: none; color: var(--text3); cursor: pointer; font-size: 0.78rem; font-family: 'Be Vietnam Pro', sans-serif; padding: 0; }
+
+/* ══════════════════════════════════════════
+   BOTTOM NAV — mobile
+══════════════════════════════════════════ */
+.bottom-nav {
+  display: none; position: fixed; bottom: 0; left: 0; right: 0;
+  background: rgba(241,248,250,0.94); backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border); z-index: 300;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.bn-inner { display: flex; }
+.bn-item {
+  flex: 1; display: flex; flex-direction: column; align-items: center;
+  padding: 9px 4px 8px; cursor: pointer; border: none; background: none;
+  color: var(--text3); font-family: 'Be Vietnam Pro', sans-serif; transition: var(--trans);
+}
+.bn-item .bn-pill {
+  width: 54px; height: 28px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  transition: var(--trans); margin-bottom: 2px;
+}
+.bn-item.active { color: var(--p); }
+.bn-item.active .bn-pill { background: rgba(255,122,47,0.14); }
+.bn-item .material-icons-round { font-size: 20px; }
+.bn-item span.bn-lbl { font-size: 0.6rem; font-weight: 600; }
+
+/* ══════════════════════════════════════════
+   STITCH-2 OVERRIDES
+══════════════════════════════════════════ */
+.topbar {
+  box-shadow: 0 20px 40px rgba(41,48,50,0.06);
+  border-bottom: none;
+}
+
+.sidebar {
+  width: 78px;
+  border-right: none;
+  background: rgba(255,255,255,0.84);
+  box-shadow: inset -1px 0 0 rgba(41,48,50,0.06);
+}
+
+.main {
+  margin-left: 78px;
+  max-width: 1280px;
+  padding: 30px;
+}
+
+.card,
+.metric-card,
+.zone-card,
+.weight-entry,
+.chat-win,
+.topic-btn,
+.role-pill,
+.notif-btn,
+.chat-bar,
+.input,
+.select {
+  border: none;
+  box-shadow: 0 12px 26px rgba(41,48,50,0.06);
+}
+
+.card,
+.metric-card,
+.chat-win,
+.zone-card,
+.weight-entry,
+.profile-hero,
+.dash-hero,
+.step-hero-card,
+.hr-main-card {
+  border-radius: 28px;
+}
+
+.btn,
+.role-pill,
+.input,
+.select,
+.chat-bar,
+.topic-btn,
+.badge {
+  border-radius: 9999px;
+}
+
+.btn-icon,
+.notif-btn,
+.send-btn {
+  border-radius: 14px;
+}
+
+.page-head h2 {
+  font-size: 2rem;
+  letter-spacing: -0.04em;
+}
+
+.page-head p {
+  font-size: 0.9rem;
+}
+
+.bubble-body,
+.bubble.user .bubble-body {
+  border-radius: 22px;
+}
+
+.bubble.user .bubble-body {
+  background: linear-gradient(135deg, #ff7a2f 0%, #9c3f00 100%);
+}
+
+.bottom-nav {
+  border-top: none;
+  box-shadow: 0 -10px 24px rgba(41,48,50,0.08);
+}
+
+.bn-item.active .bn-pill,
+.nav-item.active .ni-icon {
+  box-shadow: inset 0 0 0 1px rgba(255,122,47,0.22);
+}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .sidebar { display: none; }
+  .main { margin-left: 0; padding: 16px 14px 80px; }
+  .bottom-nav { display: block; }
+  .chat-layout { grid-template-columns: 1fr; }
+  .topics-panel { display: none; }
+  .zone-cards { grid-template-columns: 1fr 1fr; }
+  .g2 { grid-template-columns: 1fr; }
+  .dash-hero { padding: 20px; }
+  .hero-right { display: none; }
+  .bmi-hero { padding: 20px; }
+  .hr-main-card { padding: 20px; }
+  .step-hero-card { padding: 20px; }
+}
+@media (max-width: 480px) {
+  .zone-cards { grid-template-columns: 1fr; }
+  .g3 { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ TOPBAR ═══════════ -->
+<header class="topbar">
+  <div class="topbar-brand">
+    <div class="brand-icon"><span class="material-icons-round">monitor_heart</span></div>
+    <div>
+      <div class="brand-name">Medi<span>Track</span> Pro</div>
+      <div class="brand-tag">Health Management System</div>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <div class="notif-btn"><span class="material-icons-round">notifications</span><div class="notif-dot"></div></div>
+    <button class="role-pill" id="roleBtn" onclick="toggleRole()">
+      <span class="material-icons-round">account_circle</span>
+      <span id="roleLabel">Patient</span>
+    </button>
+  </div>
+</header>
+
+<!-- ═══════════ LAYOUT ═══════════ -->
+<div class="layout">
+
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <button class="nav-item active" onclick="goTo('dashboard',this)">
+      <div class="ni-icon"><span class="material-icons-round">grid_view</span></div>
+      <span class="ni-label">Home</span>
+    </button>
+    <button class="nav-item" onclick="goTo('bmi',this)">
+      <div class="ni-icon"><span class="material-icons-round">monitor_weight</span></div>
+      <span class="ni-label">BMI</span>
+    </button>
+    <button class="nav-item" onclick="goTo('steps',this)">
+      <div class="ni-icon"><span class="material-icons-round">directions_walk</span></div>
+      <span class="ni-label">Steps</span>
+    </button>
+    <button class="nav-item" onclick="goTo('heart',this)">
+      <div class="ni-icon"><span class="material-icons-round">favorite</span></div>
+      <span class="ni-label">Heart</span>
+    </button>
+    <button class="nav-item" onclick="goTo('weight',this)">
+      <div class="ni-icon"><span class="material-icons-round">trending_up</span></div>
+      <span class="ni-label">Weight</span>
+    </button>
+    <button class="nav-item" onclick="goTo('chat',this)">
+      <div class="ni-icon"><span class="material-icons-round">smart_toy</span></div>
+      <span class="ni-label">MediBot</span>
+    </button>
+    <button class="nav-item" onclick="goTo('profile',this)">
+      <div class="ni-icon"><span class="material-icons-round">person</span></div>
+      <span class="ni-label">Profile</span>
+    </button>
+  </nav>
+
+  <!-- Main -->
+  <main class="main">
+
+    <!-- ━━━━ DASHBOARD ━━━━ -->
+    <section id="dashboard" class="page active">
+
+      <!-- Hero -->
+      <div class="dash-hero mb20">
+        <div class="hero-greeting">Good day, <span id="heroName">Patient</span> 👋</div>
+        <div class="hero-sub" id="heroDate">Loading date…</div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <div class="hero-stat-val" id="hSteps" style="color:var(--p)">0</div>
+            <div class="hero-stat-lbl">Steps Today</div>
+          </div>
+          <div style="width:1px;background:var(--border);align-self:stretch;margin:4px 0"></div>
+          <div class="hero-stat">
+            <div class="hero-stat-val" id="hHR" style="color:var(--danger)">—</div>
+            <div class="hero-stat-lbl">Heart Rate</div>
+          </div>
+          <div style="width:1px;background:var(--border);align-self:stretch;margin:4px 0"></div>
+          <div class="hero-stat">
+            <div class="hero-stat-val" id="hBMI" style="color:var(--info)">—</div>
+            <div class="hero-stat-lbl">BMI</div>
+          </div>
+          <div style="width:1px;background:var(--border);align-self:stretch;margin:4px 0"></div>
+          <div class="hero-stat">
+            <div class="hero-stat-val" id="hWt" style="color:var(--warning)">—</div>
+            <div class="hero-stat-lbl">Weight (kg)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Metrics -->
+      <div class="g-auto mb20">
+        <div class="metric-card">
+          <div class="stripe" style="background:linear-gradient(90deg,var(--p),#34D399)"></div>
+          <div class="mc-icon" style="background:rgba(255,122,47,0.12)">
+            <span class="material-icons-round" style="color:var(--p)">directions_walk</span>
+          </div>
+          <div class="flex-center" style="justify-content:space-between;align-items:flex-end">
+            <div>
+              <div class="mc-val" id="dSteps" style="color:var(--p)">0</div>
+              <div class="mc-lbl">Daily Steps</div>
+              <div class="mc-sub"><span class="material-icons-round">flag</span>Goal: <span id="dGoal">10,000</span></div>
+            </div>
+            <div class="step-mini-ring">
+              <svg width="52" height="52" viewBox="0 0 52 52">
+                <circle cx="26" cy="26" r="20" fill="none" stroke="rgba(41,48,50,0.08)" stroke-width="5"/>
+                <circle cx="26" cy="26" r="20" fill="none" stroke="var(--p)" stroke-width="5" stroke-linecap="round"
+                  stroke-dasharray="126" id="miniRing" style="stroke-dashoffset:126;transition:stroke-dashoffset 0.5s ease;"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="metric-card">
+          <div class="stripe" style="background:linear-gradient(90deg,var(--danger),#FB7185)"></div>
+          <div class="mc-icon" style="background:rgba(248,113,113,0.1)">
+            <span class="material-icons-round" style="color:var(--danger)">favorite</span>
+          </div>
+          <div class="mc-val" id="dHR" style="color:var(--danger)">— <small style="font-size:1rem;font-weight:500">bpm</small></div>
+          <div class="mc-lbl">Heart Rate</div>
+          <div class="mc-sub" id="dHRsub"><span class="material-icons-round">schedule</span>No reading yet</div>
+        </div>
+        <div class="metric-card">
+          <div class="stripe" style="background:linear-gradient(90deg,var(--info),#818CF8)"></div>
+          <div class="mc-icon" style="background:rgba(96,165,250,0.1)">
+            <span class="material-icons-round" style="color:var(--info)">monitor_weight</span>
+          </div>
+          <div class="mc-val" id="dBMI" style="color:var(--info)">—</div>
+          <div class="mc-lbl">BMI Index</div>
+          <div class="mc-sub" id="dBMIsub"><span class="material-icons-round">info</span>Not calculated</div>
+        </div>
+        <div class="metric-card">
+          <div class="stripe" style="background:linear-gradient(90deg,var(--warning),#FBBF24)"></div>
+          <div class="mc-icon" style="background:rgba(252,211,77,0.1)">
+            <span class="material-icons-round" style="color:var(--warning)">scale</span>
+          </div>
+          <div class="mc-val" id="dWt" style="color:var(--warning)">— <small style="font-size:1rem;font-weight:500">kg</small></div>
+          <div class="mc-lbl">Body Weight</div>
+          <div class="mc-sub" id="dWtSub"><span class="material-icons-round">calendar_today</span>Not logged</div>
+        </div>
+        <div class="metric-card">
+          <div class="stripe" style="background:linear-gradient(90deg,#A78BFA,#818CF8)"></div>
+          <div class="mc-icon" style="background:rgba(167,139,250,0.1)">
+            <span class="material-icons-round" style="color:#A78BFA">local_fire_department</span>
+          </div>
+          <div class="mc-val" id="dCal" style="color:#A78BFA">0</div>
+          <div class="mc-lbl">Calories Burned</div>
+          <div class="mc-sub"><span class="material-icons-round">bolt</span>From activity</div>
+        </div>
+        <div class="metric-card">
+          <div class="stripe" style="background:linear-gradient(90deg,#34D399,#10B981)"></div>
+          <div class="mc-icon" style="background:rgba(52,211,153,0.1)">
+            <span class="material-icons-round" style="color:var(--success)">route</span>
+          </div>
+          <div class="mc-val" id="dDist" style="color:var(--success)">0.00 <small style="font-size:1rem;font-weight:500">km</small></div>
+          <div class="mc-lbl">Distance</div>
+          <div class="mc-sub"><span class="material-icons-round">straighten</span>Today</div>
+        </div>
+      </div>
+
+      <!-- Bottom row -->
+      <div class="g2">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title-group">
+              <div class="card-icon" style="background:rgba(255,122,47,0.12)">
+                <span class="material-icons-round" style="color:var(--p)">insights</span>
+              </div>
+              <div><div class="ct">Step Progress</div><div class="cs">Daily goal tracker</div></div>
+            </div>
+            <span class="badge badge-teal" id="stepProgressBadge">In Progress</span>
+          </div>
+          <div style="height:6px;background:var(--bg2);border-radius:3px;overflow:hidden;margin-bottom:10px">
+            <div id="dStepBar" style="height:100%;background:linear-gradient(90deg,var(--p),#34D399);border-radius:3px;width:0%;transition:width 0.5s ease"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:0.75rem;color:var(--text3)">
+            <span>0</span>
+            <span id="dStepLeft" style="color:var(--text2);font-weight:600">0 steps remaining</span>
+            <span id="dGoal2">10,000</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title-group">
+              <div class="card-icon" style="background:rgba(248,113,113,0.1)">
+                <span class="material-icons-round" style="color:var(--danger)">speed</span>
+              </div>
+              <div><div class="ct">HR Zones</div><div class="cs">Current analysis</div></div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div class="flex-center gap8"><div style="width:8px;height:8px;border-radius:50%;background:#34D399;flex-shrink:0"></div>
+              <div style="flex:1"><div style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:3px"><span style="font-weight:600">Resting</span><span style="color:var(--text3)">60–100</span></div>
+              <div style="height:4px;background:var(--bg2);border-radius:2px"><div id="dz1" style="height:100%;background:#34D399;border-radius:2px;width:30%"></div></div></div></div>
+            <div class="flex-center gap8"><div style="width:8px;height:8px;border-radius:50%;background:var(--info);flex-shrink:0"></div>
+              <div style="flex:1"><div style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:3px"><span style="font-weight:600">Fat Burn</span><span style="color:var(--text3)">100–130</span></div>
+              <div style="height:4px;background:var(--bg2);border-radius:2px"><div id="dz2" style="height:100%;background:var(--info);border-radius:2px;width:0%"></div></div></div></div>
+            <div class="flex-center gap8"><div style="width:8px;height:8px;border-radius:50%;background:var(--warning);flex-shrink:0"></div>
+              <div style="flex:1"><div style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:3px"><span style="font-weight:600">Cardio</span><span style="color:var(--text3)">130–160</span></div>
+              <div style="height:4px;background:var(--bg2);border-radius:2px"><div id="dz3" style="height:100%;background:var(--warning);border-radius:2px;width:0%"></div></div></div></div>
+            <div class="flex-center gap8"><div style="width:8px;height:8px;border-radius:50%;background:var(--danger);flex-shrink:0"></div>
+              <div style="flex:1"><div style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:3px"><span style="font-weight:600">Peak</span><span style="color:var(--text3)">160+</span></div>
+              <div style="height:4px;background:var(--bg2);border-radius:2px"><div id="dz4" style="height:100%;background:var(--danger);border-radius:2px;width:0%"></div></div></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ━━━━ BMI ━━━━ -->
+    <section id="bmi" class="page">
+      <div class="page-head"><h2>BMI <em>Calculator</em></h2><p>WHO Body Mass Index Classification</p></div>
+      <div class="card mb16">
+        <div class="card-header">
+          <div class="card-title-group">
+            <div class="card-icon" style="background:rgba(255,122,47,0.12)"><span class="material-icons-round" style="color:var(--p)">monitor_weight</span></div>
+            <div><div class="ct">Enter Measurements</div><div class="cs">Metric & Imperial supported</div></div>
+          </div>
+        </div>
+        <div class="input-grid mb16">
+          <div class="field"><label>HEIGHT</label><input class="input" type="number" id="bH" placeholder="e.g. 170"></div>
+          <div class="field"><label>HEIGHT UNIT</label>
+            <select class="select" id="bHU" onchange="toggleIn()">
+              <option value="cm">Centimeters (cm)</option>
+              <option value="ft">Feet</option>
+            </select>
+          </div>
+          <div class="field" id="inchField" style="display:none"><label>INCHES</label><input class="input" type="number" id="bIn" placeholder="0–11" min="0" max="11"></div>
+          <div class="field"><label>WEIGHT</label><input class="input" type="number" id="bW" placeholder="e.g. 70"></div>
+          <div class="field"><label>WEIGHT UNIT</label>
+            <select class="select" id="bWU">
+              <option value="kg">Kilograms (kg)</option>
+              <option value="lbs">Pounds (lbs)</option>
+            </select>
+          </div>
+          <div class="field"><label>AGE</label><input class="input" type="number" id="bAge" placeholder="Years" min="2" max="120"></div>
+          <div class="field"><label>GENDER</label>
+            <select class="select" id="bGen">
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="flex gap8 flex-wrap">
+          <button class="btn btn-primary" onclick="calcBMI()"><span class="material-icons-round">calculate</span>Calculate BMI</button>
+          <button class="btn btn-ghost" onclick="clearBMI()"><span class="material-icons-round">restart_alt</span>Clear</button>
+        </div>
+      </div>
+
+      <div class="bmi-result" id="bmiOut">
+        <!-- Hero -->
+        <div class="bmi-hero mb16">
+          <div class="bmi-score">
+            <div class="bmi-circle">
+              <div class="bmi-num" id="bmiNum">—</div>
+              <div class="bmi-unit">kg/m²</div>
+            </div>
+          </div>
+          <div class="bmi-info">
+            <div class="bmi-cat" id="bmiCat">—</div>
+            <div class="bmi-desc" id="bmiDesc">—</div>
+            <div class="bmi-pills">
+              <div class="bmi-pill" id="bmiIdeal">—</div>
+              <div class="bmi-pill" id="bmiAge2">—</div>
+            </div>
+          </div>
+        </div>
+        <!-- Arc gauge -->
+        <div class="card mb16">
+          <div class="ct" style="margin-bottom:14px">WHO Classification Scale</div>
+          <div class="bmi-arc-wrap">
+            <svg width="260" height="140" viewBox="0 0 260 140">
+              <defs>
+                <linearGradient id="arcGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%"   stop-color="#3B82F6"/>
+                  <stop offset="33%"  stop-color="#34D399"/>
+                  <stop offset="66%"  stop-color="#FCD34D"/>
+                  <stop offset="100%" stop-color="#F87171"/>
+                </linearGradient>
+              </defs>
+              <path d="M 15,140 A 115,115 0 0,1 245,140" fill="none" stroke="rgba(41,48,50,0.08)" stroke-width="12" stroke-linecap="round"/>
+              <path d="M 15,140 A 115,115 0 0,1 245,140" fill="none" stroke="url(#arcGrad)" stroke-width="12" stroke-linecap="round"/>
+              <line id="bmiNeedle" x1="130" y1="140" x2="130" y2="30" stroke="white" stroke-width="2.5" stroke-linecap="round" class="bmi-arc-needle"/>
+              <circle cx="130" cy="140" r="5" fill="white"/>
+            </svg>
+          </div>
+          <div class="bmi-range-labels">
+            <span>Underweight<br>&lt;18.5</span>
+            <span style="text-align:center">Normal<br>18.5–24.9</span>
+            <span style="text-align:center">Overweight<br>25–29.9</span>
+            <span style="text-align:right">Obese<br>≥30</span>
+          </div>
+        </div>
+        <!-- Advice -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title-group">
+              <div class="card-icon" style="background:rgba(255,122,47,0.12)"><span class="material-icons-round" style="color:var(--p)">medical_information</span></div>
+              <div><div class="ct">Clinical Recommendations</div><div class="cs">Based on WHO guidelines</div></div>
+            </div>
+          </div>
+          <div class="advice-list" id="bmiAdvice"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ━━━━ STEPS ━━━━ -->
+    <section id="steps" class="page">
+      <div class="page-head"><h2>Step <em>Counter</em></h2><p>Daily walking activity & calorie tracker</p></div>
+      <div class="step-hero-card mb16">
+        <svg width="0" height="0"><defs>
+          <linearGradient id="stepGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#2DD4BF"/>
+            <stop offset="100%" stop-color="#34D399"/>
+          </linearGradient>
+        </defs></svg>
+        <div class="step-donut">
+          <svg width="190" height="190" viewBox="0 0 190 190">
+            <circle cx="95" cy="95" r="80" stroke-width="10" class="step-donut-track"/>
+            <circle cx="95" cy="95" r="80" stroke-width="10" class="step-donut-fill" id="stepDonut"
+              stroke-dasharray="503" stroke-dashoffset="503"/>
+          </svg>
+          <div class="step-donut-center">
+            <div class="sdc-num" id="sNum">0</div>
+            <div class="sdc-of">/ <span id="sGoalLbl">10,000</span></div>
+            <div class="sdc-pct" id="sPct">0%</div>
+          </div>
+        </div>
+        <div class="step-details">
+          <div class="flex-center gap12">
+            <div class="step-sensor">
+              <div class="pulse-dot off" id="pulseD"></div>
+              <span id="sensorTxt">Click Start to begin</span>
+            </div>
+            <span class="badge badge-muted" id="sStatusBadge">Inactive</span>
+          </div>
+          <div class="step-stats-row">
+            <div class="sstat"><div class="sstat-val" id="sCal">0</div><div class="sstat-lbl">🔥 Calories</div></div>
+            <div class="sstat"><div class="sstat-val" id="sDist">0.00</div><div class="sstat-lbl">📍 km</div></div>
+            <div class="sstat"><div class="sstat-val" id="sTime">0</div><div class="sstat-lbl">⏱ min</div></div>
+          </div>
+          <div class="step-btns">
+            <button class="btn btn-primary" id="sBtn" onclick="toggleSteps()"><span class="material-icons-round">play_arrow</span>Start</button>
+            <button class="btn btn-secondary" onclick="addSteps()"><span class="material-icons-round">add</span>Add Steps</button>
+            <button class="btn btn-ghost" onclick="resetSteps()"><span class="material-icons-round">restart_alt</span>Reset</button>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title-group">
+            <div class="card-icon" style="background:rgba(255,122,47,0.12)"><span class="material-icons-round" style="color:var(--p)">flag</span></div>
+            <div><div class="ct">Daily Goal</div><div class="cs">WHO recommends 8,000–10,000 steps/day</div></div>
+          </div>
+        </div>
+        <div class="input-grid2">
+          <div class="field"><label>GOAL (STEPS)</label><input class="input" type="number" id="goalInp" value="10000" min="500"></div>
+          <div class="field"><label>&nbsp;</label><button class="btn btn-secondary" onclick="setGoal()"><span class="material-icons-round">save</span>Save Goal</button></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ━━━━ HEART ━━━━ -->
+    <section id="heart" class="page">
+      <div class="page-head"><h2>Heart Rate <em>Monitor</em></h2><p>Pulse tracking & cardiovascular zone analysis</p></div>
+      <div class="hr-main-card mb16">
+        <div class="hr-top">
+          <div class="hr-left">
+            <div class="heart-emoji" id="heartEmoji">❤️</div>
+            <div class="hr-bpm-row">
+              <div class="hr-big" id="hrBig">--</div>
+              <div class="hr-bpm-unit">bpm</div>
+            </div>
+            <div class="hr-zone-label" id="hrZoneLbl" style="color:var(--text3)">No reading logged</div>
+          </div>
+          <div class="hr-ecg flex1">
+            <canvas id="hrECG" width="500" height="90"></canvas>
+            <div class="ecg-label">LIVE ECG</div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="input-grid2">
+          <div class="field"><label>HEART RATE (BPM)</label><input class="input" type="number" id="hrInp" placeholder="e.g. 72" min="30" max="220"></div>
+          <div class="field"><label>&nbsp;</label>
+            <div class="flex gap8 flex-wrap">
+              <button class="btn btn-primary" onclick="logHR()"><span class="material-icons-round">favorite</span>Log</button>
+              <button class="btn btn-secondary" id="simBtn" onclick="toggleSim()"><span class="material-icons-round">play_circle</span>Simulate</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title-group">
+            <div class="card-icon" style="background:rgba(248,113,113,0.1)"><span class="material-icons-round" style="color:var(--danger)">speed</span></div>
+            <div><div class="ct">Heart Rate Zones</div><div class="cs">Cardiovascular training zones</div></div>
+          </div>
+        </div>
+        <div class="zone-cards">
+          <div class="zone-card" id="z-rest"><div class="zone-dot" style="background:#34D399"></div><div class="zone-name">Resting</div><div class="zone-range">60–100 bpm</div><div class="zone-bar-bg"><div class="zone-bar" id="zb1" style="background:#34D399;width:30%"></div></div></div>
+          <div class="zone-card" id="z-fat"><div class="zone-dot" style="background:var(--info)"></div><div class="zone-name">Fat Burn</div><div class="zone-range">100–130 bpm</div><div class="zone-bar-bg"><div class="zone-bar" id="zb2" style="background:var(--info)"></div></div></div>
+          <div class="zone-card" id="z-cardio"><div class="zone-dot" style="background:var(--warning)"></div><div class="zone-name">Cardio</div><div class="zone-range">130–160 bpm</div><div class="zone-bar-bg"><div class="zone-bar" id="zb3" style="background:var(--warning)"></div></div></div>
+          <div class="zone-card" id="z-peak"><div class="zone-dot" style="background:var(--danger)"></div><div class="zone-name">Peak</div><div class="zone-range">160+ bpm</div><div class="zone-bar-bg"><div class="zone-bar" id="zb4" style="background:var(--danger)"></div></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ━━━━ WEIGHT ━━━━ -->
+    <section id="weight" class="page">
+      <div class="page-head"><h2>Weight <em>Tracker</em></h2><p>Log & monitor body weight over time</p></div>
+      <div class="card mb16">
+        <div class="card-header">
+          <div class="card-title-group">
+            <div class="card-icon" style="background:rgba(252,211,77,0.1)"><span class="material-icons-round" style="color:var(--warning)">add_circle</span></div>
+            <div><div class="ct">Log Weight</div><div class="cs">Weigh in first thing in the morning</div></div>
+          </div>
+        </div>
+        <div class="input-grid">
+          <div class="field"><label>WEIGHT</label><input class="input" type="number" id="wtInp" placeholder="e.g. 70.5" step="0.1"></div>
+          <div class="field"><label>UNIT</label>
+            <select class="select" id="wtUnit">
+              <option value="kg">Kilograms (kg)</option>
+              <option value="lbs">Pounds (lbs)</option>
+            </select>
+          </div>
+          <div class="field"><label>DATE</label><input class="input" type="date" id="wtDate"></div>
+          <div class="field"><label>&nbsp;</label><button class="btn btn-primary" onclick="logWt()"><span class="material-icons-round">save</span>Save Entry</button></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title-group">
+            <div class="card-icon" style="background:rgba(252,211,77,0.1)"><span class="material-icons-round" style="color:var(--warning)">show_chart</span></div>
+            <div><div class="ct">Weight Trend</div><div class="cs">Historical data visualization</div></div>
+          </div>
+        </div>
+        <div class="weight-chart-wrap mb16"><canvas id="wtChart" width="900" height="150"></canvas></div>
+        <div class="we-list" id="weList">
+          <div class="empty-state"><span class="material-icons-round">scale</span><p>No entries yet.<br>Log your first weight measurement.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ━━━━ MEDIBOT ━━━━ -->
+    <section id="chat" class="page">
+      <div class="page-head"><h2>Medi<em>Bot</em></h2><p>AI health assistant — Hindi & English</p></div>
+      <div class="disclaimer"><span class="material-icons-round">warning_amber</span>General information only. Always consult a qualified healthcare professional for medical advice.</div>
+      <div class="chat-layout">
+        <div class="chat-panel">
+          <div class="chat-win" id="chatWin"></div>
+          <div class="chat-bar">
+            <input type="text" id="chatInp" placeholder="Ask about symptoms, medicines, diet… (Hindi/English)" onkeydown="if(event.key==='Enter')sendMsg()">
+            <button class="send-btn" onclick="sendMsg()"><span class="material-icons-round">send</span></button>
+          </div>
+        </div>
+        <div class="topics-panel">
+          <div class="topics-label">Quick Topics</div>
+          <button class="topic-btn" onclick="quick('Headache aur sir dard ke liye kya karna chahiye?')"><span class="material-icons-round">sick</span>Headache</button>
+          <button class="topic-btn" onclick="quick('Fever aur bukhar ka treatment kya hai?')"><span class="material-icons-round">thermostat</span>Fever</button>
+          <button class="topic-btn" onclick="quick('Acidity aur heartburn se kaise bachein?')"><span class="material-icons-round">medication</span>Acidity</button>
+          <button class="topic-btn" onclick="quick('Sardi aur khansi ke liye kya karein?')"><span class="material-icons-round">masks</span>Cold/Cough</button>
+          <button class="topic-btn" onclick="quick('Blood pressure high hai kya karna chahiye?')"><span class="material-icons-round">monitor_heart</span>Blood Pressure</button>
+          <button class="topic-btn" onclick="quick('Diabetes mein kya khaana chahiye?')"><span class="material-icons-round">glucose</span>Diabetes</button>
+          <button class="topic-btn" onclick="quick('Neend nahi aati kya karun?')"><span class="material-icons-round">bedtime</span>Sleep</button>
+          <button class="topic-btn" onclick="quick('Vitamin D deficiency ke symptoms kya hain?')"><span class="material-icons-round">wb_sunny</span>Vitamin D</button>
+          <button class="topic-btn" onclick="quick('Muscle pain exercise ke baad kaise theek karein?')"><span class="material-icons-round">fitness_center</span>Muscle Pain</button>
+          <button class="topic-btn" onclick="quick('Paracetamol kab aur kaise leni chahiye?')"><span class="material-icons-round">medication_liquid</span>Paracetamol</button>
+          <button class="topic-btn" onclick="quick('Roz kitna paani peena chahiye?')"><span class="material-icons-round">water_drop</span>Hydration</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ━━━━ PROFILE ━━━━ -->
+    <section id="profile" class="page">
+      <div class="page-head"><h2>My <em>Profile</em></h2><p>Personal health information</p></div>
+      <div class="profile-hero">
+        <div class="avatar" id="profAvatar">P</div>
+        <div class="profile-meta">
+          <h2 id="profName">Patient</h2>
+          <p id="profRole">Role: Patient</p>
+          <div class="profile-chips">
+            <span class="badge badge-success" id="profAge">—</span>
+            <span class="badge badge-info" id="profGender">—</span>
+            <span class="badge badge-muted" id="profHt">—</span>
+            <span class="badge badge-teal" id="profBlood">—</span>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title-group">
+            <div class="card-icon" style="background:rgba(255,122,47,0.12)"><span class="material-icons-round" style="color:var(--p)">edit</span></div>
+            <div><div class="ct">Personal Details</div><div class="cs">Used for accurate health calculations</div></div>
+          </div>
+        </div>
+        <div class="input-grid mb16">
+          <div class="field"><label>FULL NAME</label><input class="input" type="text" id="pName" placeholder="Your name" oninput="saveProf()"></div>
+          <div class="field"><label>AGE</label><input class="input" type="number" id="pAge" placeholder="Years" min="1" max="120" oninput="saveProf()"></div>
+          <div class="field"><label>GENDER</label>
+            <select class="select" id="pGender" onchange="saveProf()">
+              <option value="">Select</option>
+              <option>Male</option><option>Female</option><option>Other</option>
+            </select>
+          </div>
+          <div class="field"><label>HEIGHT (cm)</label><input class="input" type="number" id="pHt" placeholder="e.g. 170" oninput="saveProf()"></div>
+          <div class="field"><label>BLOOD GROUP</label>
+            <select class="select" id="pBlood" onchange="saveProf()">
+              <option value="">Unknown</option>
+              <option>A+</option><option>A−</option><option>B+</option><option>B−</option>
+              <option>AB+</option><option>AB−</option><option>O+</option><option>O−</option>
+            </select>
+          </div>
+          <div class="field"><label>EMERGENCY CONTACT</label><input class="input" type="tel" id="pEmg" placeholder="+91 XXXXXXXXXX" oninput="saveProf()"></div>
+        </div>
+        <div class="field"><label>KNOWN CONDITIONS / ALLERGIES</label><input class="input" type="text" id="pCond" placeholder="e.g. Diabetes, Penicillin allergy, Hypertension" oninput="saveProf()"></div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- Bottom Nav -->
+<nav class="bottom-nav">
+  <div class="bn-inner">
+    <button class="bn-item active" onclick="goTo('dashboard',this)"><div class="bn-pill"><span class="material-icons-round">grid_view</span></div><span class="bn-lbl">Home</span></button>
+    <button class="bn-item" onclick="goTo('bmi',this)"><div class="bn-pill"><span class="material-icons-round">monitor_weight</span></div><span class="bn-lbl">BMI</span></button>
+    <button class="bn-item" onclick="goTo('steps',this)"><div class="bn-pill"><span class="material-icons-round">directions_walk</span></div><span class="bn-lbl">Steps</span></button>
+    <button class="bn-item" onclick="goTo('heart',this)"><div class="bn-pill"><span class="material-icons-round">favorite</span></div><span class="bn-lbl">Heart</span></button>
+    <button class="bn-item" onclick="goTo('chat',this)"><div class="bn-pill"><span class="material-icons-round">smart_toy</span></div><span class="bn-lbl">Bot</span></button>
+  </div>
+</nav>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <span class="toast-icon">✓</span>
+  <span id="toastMsg"></span>
+  <button class="toast-dismiss" onclick="document.getElementById('toast').classList.remove('show')">Dismiss</button>
+</div>
+
+<script>
+'use strict';
+
+// ── STATE ──────────────────────────────────────
+let steps    = +localStorage.getItem('s_steps') || 0;
+let goal     = +localStorage.getItem('s_goal')  || 10000;
+let stepOn   = false;
+let stepTmr  = null;
+let lastT    = 0;
+let hrPoints = [];
+let hrSimTmr = null;
+let wtLog    = JSON.parse(localStorage.getItem('s_wt') || '[]');
+let role     = localStorage.getItem('s_role') || 'patient';
+
+const hrCtx  = document.getElementById('hrECG').getContext('2d');
+
+// ── INIT ───────────────────────────────────────
+(() => {
+  const now = new Date();
+  document.getElementById('heroDate').textContent =
+    now.toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  document.getElementById('wtDate').value = now.toISOString().slice(0,10);
+  document.getElementById('goalInp').value = goal;
+  loadProf(); updateStepUI(); renderWt();
+  applyRole();
+  setTimeout(() => addBot(`Namaste! 🙏 I'm <strong>MediBot</strong>, your personal health assistant.<br>
+  I support <strong>Hindi & English</strong> both.<br>
+  Pick a topic from the right or type your question below.`), 400);
+})();
+
+// ── NAV ────────────────────────────────────────
+function goTo(id, el) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item,.bn-item').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if (el) {
+    el.classList.add('active');
+    const isRail = el.closest('.sidebar');
+    const peers  = isRail ? document.querySelectorAll('.bn-item') : document.querySelectorAll('.nav-item');
+    const idx    = Array.from(el.parentElement.children).indexOf(el);
+    if (peers[idx]) peers[idx].classList.add('active');
+  }
+  if (id === 'weight') setTimeout(drawWtChart, 60);
+}
+
+// ── ROLE ───────────────────────────────────────
+function toggleRole() {
+  role = role === 'patient' ? 'doctor' : 'patient';
+  localStorage.setItem('s_role', role); applyRole();
+  toast(role === 'doctor' ? '🩺 Doctor view activated' : '👤 Patient view activated');
+}
+function applyRole() {
+  const isDoc = role === 'doctor';
+  const btn = document.getElementById('roleBtn');
+  document.getElementById('roleLabel').textContent = isDoc ? 'Doctor' : 'Patient';
+  btn.classList.toggle('doctor', isDoc);
+  document.getElementById('profRole').textContent = `Role: ${isDoc ? 'Doctor / Physician' : 'Patient'}`;
+}
+
+// ── PROFILE ────────────────────────────────────
+function saveProf() {
+  const p = { name: v('pName'), age: v('pAge'), gender: v('pGender'), ht: v('pHt'), blood: v('pBlood'), emg: v('pEmg'), cond: v('pCond') };
+  localStorage.setItem('s_prof', JSON.stringify(p)); refreshProfUI(p);
+}
+function loadProf() {
+  const p = JSON.parse(localStorage.getItem('s_prof') || '{}');
+  setV('pName', p.name); setV('pAge', p.age); setV('pGender', p.gender);
+  setV('pHt', p.ht); setV('pBlood', p.blood); setV('pEmg', p.emg); setV('pCond', p.cond);
+  refreshProfUI(p);
+}
+function refreshProfUI(p) {
+  const name = p.name || 'Patient';
+  document.getElementById('profName').textContent = name;
+  document.getElementById('profAvatar').textContent = name[0]?.toUpperCase() || 'P';
+  document.getElementById('heroName').textContent = p.name ? p.name.split(' ')[0] : 'Patient';
+  document.getElementById('profAge').textContent    = p.age    ? `Age: ${p.age} yr` : '—';
+  document.getElementById('profGender').textContent = p.gender || '—';
+  document.getElementById('profHt').textContent     = p.ht     ? `${p.ht} cm` : '—';
+  document.getElementById('profBlood').textContent  = p.blood  || '—';
+}
+
+// ── BMI ────────────────────────────────────────
+function toggleIn() {
+  document.getElementById('inchField').style.display = document.getElementById('bHU').value === 'ft' ? 'flex' : 'none';
+}
+function clearBMI() {
+  ['bH','bW','bAge','bIn'].forEach(id => { const e=document.getElementById(id); if(e) e.value=''; });
+  document.getElementById('bmiOut').style.display = 'none';
+}
+function calcBMI() {
+  let h = +v('bH'), w = +v('bW');
+  const hu = v('bHU'), wu = v('bWU'), age = +v('bAge') || 25;
+  if (!h || !w) { toast('⚠️ Enter height and weight'); return; }
+  if (hu === 'ft') { const i = +v('bIn') || 0; h = (h*12+i)*2.54; }
+  if (wu === 'lbs') w *= 0.453592;
+  const hm = h/100, bmi = +(w/(hm*hm)).toFixed(1);
+
+  let cat, desc, color, advices;
+  const lo = +(18.5*hm*hm).toFixed(1), hi2 = +(24.9*hm*hm).toFixed(1);
+  if (bmi < 16) {
+    cat='Severely Underweight'; desc='Immediate medical attention recommended. Serious nutritional deficiency.'; color='#60A5FA';
+    advices=[{i:'emergency',t:'<strong>Urgent:</strong> See a physician immediately — serious health risk'},
+             {i:'restaurant',t:'High-calorie, nutrient-dense diet: nuts, dairy, whole grains, avocado'},
+             {i:'fitness_center',t:'Gentle supervised resistance training only'},
+             {i:'water_drop',t:'Maintain electrolyte balance and adequate hydration'}];
+  } else if (bmi < 18.5) {
+    cat='Underweight'; desc='Below the healthy weight range. Nutritional support and lifestyle changes advised.'; color='#60A5FA';
+    advices=[{i:'restaurant',t:'Increase caloric intake with protein-rich foods: eggs, dal, paneer, nuts'},
+             {i:'schedule',t:'Eat 5–6 small meals per day consistently at regular intervals'},
+             {i:'fitness_center',t:'Strength training 3× per week to build muscle mass gradually'},
+             {i:'local_hospital',t:'Rule out underlying conditions: thyroid, anemia, malabsorption'}];
+  } else if (bmi < 25) {
+    cat='Normal Weight ✓'; desc='You are in the healthy BMI range. Maintain your current habits.'; color='#34D399';
+    advices=[{i:'check_circle',t:'<strong>Excellent!</strong> Maintain a balanced diet — 50% carbs, 30% protein, 20% healthy fats'},
+             {i:'directions_walk',t:'150 min moderate aerobic activity per week (WHO recommendation)'},
+             {i:'monitor_heart',t:'Annual health checkup and lipid profile screening recommended'},
+             {i:'sentiment_satisfied',t:'You are in the optimal health zone — keep it up!'}];
+  } else if (bmi < 30) {
+    cat='Overweight'; desc='Slightly above the healthy range. Lifestyle modification is advisable.'; color='#FCD34D';
+    advices=[{i:'no_meals',t:'Reduce processed food, refined carbohydrates, and added sugars'},
+             {i:'directions_run',t:'30–45 min brisk walk or moderate cardio exercise daily'},
+             {i:'local_drink',t:'8–10 glasses of water per day; eliminate sugary beverages'},
+             {i:'medical_services',t:'Monitor BP, fasting glucose and cholesterol every 6 months'}];
+  } else {
+    cat='Obese'; desc='Significantly elevated cardiovascular and metabolic risk. Medical supervision required.'; color='#F87171';
+    advices=[{i:'local_hospital',t:'<strong>Priority:</strong> Consult a physician and registered dietitian immediately'},
+             {i:'restaurant',t:'Low-calorie, high-fiber diet: vegetables, legumes, lean protein sources'},
+             {i:'directions_walk',t:'Begin with 20–30 min low-impact exercise: walking, swimming, cycling'},
+             {i:'medication',t:'Discuss evidence-based medical weight management with your doctor'}];
+  }
+
+  // Update UI
+  document.getElementById('bmiNum').textContent = bmi;
+  document.getElementById('bmiNum').style.color = color;
+  document.getElementById('bmiCat').textContent = cat;
+  document.getElementById('bmiCat').style.color = color;
+  document.getElementById('bmiDesc').textContent = desc;
+  document.getElementById('bmiIdeal').textContent = `Ideal: ${lo}–${hi2} kg`;
+  document.getElementById('bmiAge2').textContent = `Age: ${age} yr`;
+
+  // Needle — map bmi 14–38 to -90deg to +90deg
+  const pct = Math.min(Math.max((bmi - 14) / 24, 0), 1);
+  const deg = -90 + pct * 180;
+  document.getElementById('bmiNeedle').setAttribute('transform', `rotate(${deg}, 130, 140)`);
+
+  document.getElementById('bmiAdvice').innerHTML = advices.map(a =>
+    `<div class="advice-item">
+      <div class="ai-icon"><span class="material-icons-round">${a.i}</span></div>
+      <div class="ai-text">${a.t}</div>
+    </div>`).join('');
+
+  document.getElementById('bmiOut').style.display = 'block';
+  document.getElementById('dBMI').textContent = bmi;
+  document.getElementById('hBMI').textContent = bmi;
+  document.getElementById('dBMIsub').innerHTML = `<span class="material-icons-round">info</span>${cat}`;
+
+  toast(`BMI: ${bmi} — ${cat.replace(' ✓','')}`);
+}
+
+// ── STEPS ──────────────────────────────────────
+function updateStepUI() {
+  const pct = Math.min(steps/goal, 1);
+  const circ = 503;
+  document.getElementById('sNum').textContent   = steps.toLocaleString();
+  document.getElementById('dSteps').textContent  = steps.toLocaleString();
+  document.getElementById('hSteps').textContent  = steps.toLocaleString();
+  document.getElementById('sPct').textContent    = Math.round(pct*100)+'%';
+  document.getElementById('sGoalLbl').textContent= goal.toLocaleString();
+  document.getElementById('dGoal').textContent   = goal.toLocaleString();
+  document.getElementById('dGoal2').textContent  = goal.toLocaleString();
+  document.getElementById('stepDonut').style.strokeDashoffset = circ - (circ*pct);
+  document.getElementById('miniRing').style.strokeDashoffset  = 126 - (126*pct);
+  document.getElementById('dStepBar').style.width = (pct*100)+'%';
+  const left = Math.max(0, goal-steps);
+  document.getElementById('dStepLeft').textContent = left.toLocaleString()+' steps remaining';
+  const cal = Math.round(steps*0.04), dist = (steps*0.0008).toFixed(2), time = Math.round(steps/100);
+  document.getElementById('sCal').textContent  = cal;
+  document.getElementById('sDist').textContent = dist;
+  document.getElementById('sTime').textContent = time;
+  document.getElementById('dCal').textContent  = cal;
+  document.getElementById('dDist').textContent = dist+' km';
+  const sb = document.getElementById('stepProgressBadge');
+  sb.textContent = pct>=1?'Goal Met!':pct>=0.5?'On Track':'In Progress';
+  sb.className = `badge ${pct>=1?'badge-success':pct>=0.5?'badge-teal':'badge-warning'}`;
+  localStorage.setItem('s_steps', steps);
+}
+function toggleSteps() {
+  if (stepOn) {
+    stepOn = false;
+    document.getElementById('sBtn').innerHTML = '<span class="material-icons-round">play_arrow</span>Start';
+    document.getElementById('pulseD').classList.add('off');
+    document.getElementById('sStatusBadge').textContent = 'Paused';
+    document.getElementById('sStatusBadge').className = 'badge badge-warning';
+    document.getElementById('sensorTxt').textContent = 'Tracking paused';
+    clearInterval(stepTmr); stepTmr = null;
+    if (window.__mo) { window.removeEventListener('devicemotion', _onMotion); window.__mo = false; }
+  } else {
+    stepOn = true;
+    document.getElementById('sBtn').innerHTML = '<span class="material-icons-round">stop</span>Stop';
+    document.getElementById('pulseD').classList.remove('off');
+    document.getElementById('sStatusBadge').textContent = 'Active';
+    document.getElementById('sStatusBadge').className = 'badge badge-success';
+    if (window.DeviceMotionEvent && /Mobi|Android/i.test(navigator.userAgent)) {
+      const go = () => { window.addEventListener('devicemotion', _onMotion); window.__mo=true; document.getElementById('sensorTxt').textContent='📱 Motion sensor active'; };
+      typeof DeviceMotionEvent.requestPermission === 'function'
+        ? DeviceMotionEvent.requestPermission().then(r => r==='granted'?go():_sim()).catch(_sim)
+        : go();
+    } else { _sim(); }
+  }
+}
+function _onMotion(e) {
+  const a = e.accelerationIncludingGravity; if (!a) return;
+  const m = Math.sqrt(a.x**2+a.y**2+a.z**2), now = Date.now();
+  if (m > 11.5 && now-lastT > 350) { lastT=now; steps++; updateStepUI(); }
+}
+function _sim() {
+  document.getElementById('sensorTxt').textContent = '💻 Simulation mode';
+  stepTmr = setInterval(() => { if(stepOn){ steps += Math.floor(Math.random()*2)+1; updateStepUI(); } }, 1600);
+}
+function addSteps() { const n=+prompt('Steps to add:','500'); if(n>0){steps+=n;updateStepUI();toast(`+${n} steps added`);} }
+function resetSteps() { if(!confirm('Reset steps to zero?'))return; steps=0; updateStepUI(); toast('Steps reset'); }
+function setGoal() { const g=+document.getElementById('goalInp').value; if(g>=500){goal=g;localStorage.setItem('s_goal',g);updateStepUI();toast('Goal updated');} }
+
+// ── HEART RATE ─────────────────────────────────
+function logHR() {
+  const v2 = +document.getElementById('hrInp').value;
+  if (!v2||v2<30||v2>220){toast('⚠️ Enter valid BPM (30–220)');return;}
+  applyHR(v2); toast(`Heart rate logged: ${v2} bpm`);
+}
+function applyHR(val) {
+  document.getElementById('hrBig').textContent = val;
+  document.getElementById('dHR').innerHTML = `${val} <small style="font-size:1rem;font-weight:500">bpm</small>`;
+  document.getElementById('hHR').textContent = val;
+  let lbl, color;
+  if (val<60)       {lbl='Bradycardia — Below normal'; color='var(--info)';}
+  else if (val<=100){lbl='Normal Resting Rate';        color='var(--success)';}
+  else if (val<=130){lbl='Fat Burn Zone';              color='var(--info)';}
+  else if (val<=160){lbl='Cardio Zone';                color='var(--warning)';}
+  else              {lbl='Peak Zone — High Intensity'; color='var(--danger)';}
+  document.getElementById('hrZoneLbl').textContent = lbl;
+  document.getElementById('hrZoneLbl').style.color = color;
+  document.getElementById('dHRsub').innerHTML = `<span class="material-icons-round">info</span>${lbl}`;
+  document.getElementById('heartEmoji').style.animationDuration = Math.max(0.28, 60/val)+'s';
+
+  const zones=[{id:'zb1',lo:60,hi:100},{id:'zb2',lo:100,hi:130},{id:'zb3',lo:130,hi:160},{id:'zb4',lo:160,hi:220}];
+  const dzones=[{id:'dz2',lo:100,hi:130},{id:'dz3',lo:130,hi:160},{id:'dz4',lo:160,hi:220}];
+  [...zones,...dzones].forEach(({id,lo,hi})=>{
+    const el=document.getElementById(id); if(!el)return;
+    el.style.width=(val>=hi?100:val<=lo?0:(val-lo)/(hi-lo)*100)+'%';
+  });
+
+  hrPoints.push(val);
+  if (hrPoints.length>80) hrPoints.shift();
+  drawECG();
+}
+function drawECG() {
+  const canvas=document.getElementById('hrECG'), w=canvas.width, h=canvas.height;
+  hrCtx.clearRect(0,0,w,h);
+  if (hrPoints.length<2) return;
+  const mn=Math.min(...hrPoints)-8, mx=Math.max(...hrPoints)+8;
+  const grad=hrCtx.createLinearGradient(0,0,w,0);
+  grad.addColorStop(0,'rgba(248,113,113,0)');
+  grad.addColorStop(0.3,'rgba(248,113,113,0.8)');
+  grad.addColorStop(1,'rgba(248,113,113,1)');
+  hrCtx.beginPath(); hrCtx.strokeStyle=grad; hrCtx.lineWidth=2;
+  hrPoints.forEach((p,i)=>{
+    const x=(i/(hrPoints.length-1))*w, y=h-((p-mn)/(mx-mn))*h;
+    i===0?hrCtx.moveTo(x,y):hrCtx.lineTo(x,y);
+  });
+  hrCtx.stroke();
+  hrCtx.lineTo(w,h); hrCtx.lineTo(0,h);
+  const fill=hrCtx.createLinearGradient(0,0,0,h);
+  fill.addColorStop(0,'rgba(248,113,113,0.15)'); fill.addColorStop(1,'rgba(248,113,113,0)');
+  hrCtx.fillStyle=fill; hrCtx.fill();
+}
+function toggleSim() {
+  if (hrSimTmr) {
+    clearInterval(hrSimTmr); hrSimTmr=null;
+    document.getElementById('simBtn').innerHTML='<span class="material-icons-round">play_circle</span>Simulate';
+    toast('Simulation stopped');
+  } else {
+    let b=72;
+    hrSimTmr=setInterval(()=>{ b+=(Math.random()-.5)*8; b=Math.min(Math.max(b,55),120);
+      const val=Math.round(b); document.getElementById('hrInp').value=val; applyHR(val); }, 1100);
+    document.getElementById('simBtn').innerHTML='<span class="material-icons-round">stop_circle</span>Stop Sim';
+    toast('Live simulation started');
+  }
+}
+
+// ── WEIGHT ─────────────────────────────────────
+function logWt() {
+  const w=+document.getElementById('wtInp').value, unit=v('wtUnit'), date=v('wtDate');
+  if (!w||w<=0){toast('⚠️ Enter a valid weight');return;}
+  const kg=unit==='lbs'?+(w*0.453592).toFixed(1):+w.toFixed(1);
+  wtLog.unshift({kg,unit,orig:w,date});
+  localStorage.setItem('s_wt',JSON.stringify(wtLog));
+  renderWt(); drawWtChart();
+  document.getElementById('dWt').innerHTML=`${kg} <small style="font-size:1rem;font-weight:500">kg</small>`;
+  document.getElementById('dWtSub').innerHTML=`<span class="material-icons-round">calendar_today</span>${date}`;
+  document.getElementById('hWt').textContent=kg;
+  toast('Weight entry saved');
+}
+function renderWt() {
+  const list=document.getElementById('weList');
+  if (!wtLog.length) {
+    list.innerHTML='<div class="empty-state"><span class="material-icons-round">scale</span><p>No entries yet.<br>Log your first measurement.</p></div>';
+    return;
+  }
+  list.innerHTML=wtLog.map((e,i)=>{
+    const prev=wtLog[i+1];
+    let diff='';
+    if (prev) {
+      const d=+(e.kg-prev.kg).toFixed(1);
+      diff=`<div class="we-diff" style="color:${d>0?'var(--danger)':'var(--success)'}">
+        <span class="material-icons-round">${d>0?'arrow_upward':'arrow_downward'}</span>${Math.abs(d)} kg</div>`;
+    }
+    return `<div class="weight-entry">
+      <div class="we-ring"><span class="material-icons-round">monitor_weight</span></div>
+      <div style="flex:1"><div class="we-val">${e.kg.toFixed(1)} kg</div>
+      <div class="we-date">${new Date(e.date).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})}</div></div>
+      ${diff}
+      <button class="btn btn-ghost btn-sm btn-icon" onclick="delWt(${i})"><span class="material-icons-round" style="font-size:17px">delete_outline</span></button>
+    </div>`;
+  }).join('');
+}
+function delWt(i){wtLog.splice(i,1);localStorage.setItem('s_wt',JSON.stringify(wtLog));renderWt();drawWtChart();toast('Entry removed');}
+function drawWtChart(){
+  const canvas=document.getElementById('wtChart'),ctx=canvas.getContext('2d'),w=canvas.width,h=canvas.height;
+  ctx.clearRect(0,0,w,h);
+  if (wtLog.length<2) return;
+  const s=[...wtLog].reverse(), vals=s.map(e=>e.kg);
+  const mn=Math.min(...vals)-1.5, mx=Math.max(...vals)+1.5;
+  ctx.strokeStyle='rgba(41,48,50,0.06)'; ctx.lineWidth=1;
+  for(let i=0;i<5;i++){const y=(i/4)*h;ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}
+  const grad=ctx.createLinearGradient(0,0,0,h);
+  grad.addColorStop(0,'rgba(252,211,77,0.14)'); grad.addColorStop(1,'rgba(252,211,77,0)');
+  ctx.beginPath(); ctx.strokeStyle='#FCD34D'; ctx.lineWidth=2.5;
+  s.forEach((e,i)=>{
+    const x=(i/(s.length-1))*w, y=h-10-((e.kg-mn)/(mx-mn))*(h-20);
+    i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+  });
+  ctx.stroke();
+  ctx.lineTo(w,h); ctx.lineTo(0,h); ctx.fillStyle=grad; ctx.fill();
+  s.forEach((e,i)=>{
+    const x=(i/(s.length-1))*w, y=h-10-((e.kg-mn)/(mx-mn))*(h-20);
+    ctx.beginPath(); ctx.arc(x,y,4,0,Math.PI*2);
+    ctx.fillStyle='#FCD34D'; ctx.fill(); ctx.strokeStyle='var(--bg2)'; ctx.lineWidth=2; ctx.stroke();
+  });
+}
+
+// ── MEDIBOT ────────────────────────────────────
+const KB = [
+  {p:/\b(hi|hello|hey|hii|namaste|namaskar|salaam)\b/i,
+   r:`Namaste! 🙏 I'm <strong>MediBot</strong> — your AI health assistant.<br>Ask me about symptoms, medicines, diet, or general health in <strong>Hindi or English</strong>.`},
+  {p:/\b(headache|sir dard|sar dard|migraine|sir mein|maatha)\b/i,
+   r:`<strong>🤕 Headache / Sir Dard</strong><br><br><strong>Medicines:</strong><br>• Paracetamol 500mg — every 4–6 hours<br>• Ibuprofen 400mg — with food for severe pain<br><br><strong>Home Care:</strong><br>• Cold/warm compress on forehead<br>• Rest in quiet, dark room<br>• Drink 2 glasses water immediately<br>• Peppermint oil on temples<br><br><strong>⚠️ See Doctor If:</strong> sudden severe headache, fever + stiff neck, vision changes, or lasting &gt;3 days`},
+  {p:/\b(fever|bukhar|bukhaar|temperature|tapman|jwar)\b/i,
+   r:`<strong>🌡️ Fever / Bukhar</strong><br><br><strong>Temperature Guide:</strong><br>• 99–100.4°F → Rest & fluids<br>• 100.4–102°F → Paracetamol<br>• 102°F+ → Consult doctor<br>• 104°F+ → <strong style="color:#F87171">Emergency — hospital immediately</strong><br><br><strong>Treatment:</strong><br>• 💊 Paracetamol 650mg every 6 hours<br>• 🧊 Tepid sponging (forehead, armpits)<br>• 💧 ORS, coconut water, nimbu paani<br>• 🛌 Complete bed rest`},
+  {p:/\b(cold|cough|khansi|nazla|zukam|throat|gala|sardi)\b/i,
+   r:`<strong>😷 Cold & Cough / Sardi-Khansi</strong><br><br><strong>Home Remedies:</strong><br>• Honey + ginger + tulsi — 3× daily<br>• Salt water gargle every 4 hours<br>• Steam inhalation 2× daily<br>• Hot kadha (ginger, cinnamon, black pepper)<br><br><strong>Medicines:</strong><br>• Dry cough: Benadryl / Honitus<br>• Wet cough: Mucosolvan / Alex<br>• Nasal: Cetirizine 10mg at night<br><br><strong>⚠️ Doctor if:</strong> blood in sputum, chest pain, &gt;2 weeks`},
+  {p:/\b(acidity|acid|heartburn|pet dard|pait|gas|bloating|khatta|ulcer|jalan)\b/i,
+   r:`<strong>🫃 Acidity / Gas / Heartburn</strong><br><br><strong>Immediate Relief:</strong><br>• 🥛 Cold milk (half glass)<br>• 💊 Gelusil, Digene, or Pantoprazole 40mg<br>• Ajwain + kala namak in warm water<br>• Saunf (fennel) after meals<br><br><strong>Avoid:</strong> Spicy/fried food, tea on empty stomach, lying down after eating<br><br><strong>Do:</strong> Small frequent meals, walk 20 min post meal, elevate head while sleeping`},
+  {p:/\b(blood pressure|bp|hypertension|high bp|low bp|pressure)\b/i,
+   r:`<strong>💉 Blood Pressure</strong><br><br><strong>Normal: 120/80 mmHg</strong><br><br><strong>High BP:</strong><br>• Reduce salt strictly<br>• DASH diet: fruits, vegetables, low-fat dairy<br>• 30 min daily aerobic exercise<br>• Stress management: yoga, meditation<br>• Never stop medication without doctor<br><br><strong>Low BP:</strong><br>• Increase fluids and salt slightly<br>• Rise slowly from sitting/lying<br><br><strong style="color:#F87171">BP ≥180/120 = Hypertensive Crisis — Emergency!</strong>`},
+  {p:/\b(diabetes|sugar|blood sugar|diabetic|insulin|shakkar|glucose)\b/i,
+   r:`<strong>🍬 Diabetes Management</strong><br><br><strong>✅ Eat:</strong> Brown rice, oats, daliya, karela, methi, palak, dal, paneer, eggs, apple, guava, jamun<br><br><strong>❌ Avoid:</strong> Maida, white rice, mithai, cold drinks, packaged juices, fried foods<br><br><strong>Lifestyle:</strong><br>• 30 min brisk walk after meals<br>• Monitor fasting + post-meal glucose daily<br>• Target HbA1c &lt;7% (consult endocrinologist)<br>• Take prescribed medicines consistently`},
+  {p:/\b(sleep|neend|nind|insomnia|so nahi|jagta)\b/i,
+   r:`<strong>😴 Insomnia / Sleep Issues</strong><br><br><strong>Sleep Hygiene:</strong><br>• Fixed sleep and wake time daily<br>• No screens 1 hour before bed<br>• Cool, dark, quiet bedroom<br>• Chamomile tea or warm milk<br>• 4-7-8 breathing technique<br><br><strong>Short-term (consult doctor):</strong><br>• Melatonin 3–5mg, 30 min before bed<br>• Ashwagandha for stress & sleep<br><br><strong>⚠️ Chronic insomnia (&gt;3 weeks) needs evaluation</strong>`},
+  {p:/\b(vitamin d|vitd|vitamin|deficiency|kami|bone|haddi|sunlight)\b/i,
+   r:`<strong>☀️ Vitamin D Deficiency</strong><br><br><strong>Symptoms:</strong> Fatigue, bone/muscle pain, mood changes, frequent illness, hair loss<br><br><strong>Normal: 30–100 ng/mL</strong><br><br><strong>Sources:</strong><br>• ☀️ Sunlight: 20 min daily 10AM–2PM<br>• 🐟 Fatty fish, egg yolks, fortified milk<br>• 💊 D3 60,000 IU/week × 8 wks (Rx), then 1000–2000 IU/day<br><br><strong>Confirm with 25-OH Vitamin D blood test</strong>`},
+  {p:/\b(muscle|dard|body pain|soreness|gym|exercise pain|joint)\b/i,
+   r:`<strong>💪 Muscle Pain / Body Ache</strong><br><br><strong>RICE Method:</strong><br>• Rest — avoid stressing muscle<br>• Ice — cold pack 15–20 min every 2h<br>• Compression — elastic bandage<br>• Elevation — raise affected area<br><br><strong>Medicines:</strong><br>• Ibuprofen 400mg with food<br>• Combiflam for pain + inflammation<br>• Volini / Moov topical gel<br><br><strong>Recovery:</strong> Hydrate well, banana (potassium), 48h rest, light stretching<br><strong>⚠️ Doctor if pain &gt;1 week</strong>`},
+  {p:/\b(paracetamol|crocin|dolo|panadol|acetaminophen|dawa|tablet|medicine)\b/i,
+   r:`<strong>💊 Paracetamol Guide</strong><br><br><strong>Adult Dose:</strong><br>• 500–1000mg every 4–6 hours<br>• Maximum: 4000mg per day<br><br><strong>Used for:</strong> Fever, headache, body pain, dental pain, period cramps<br><br><strong>Cautions:</strong><br>• ❌ Liver disease — consult doctor<br>• ❌ Never combine with alcohol<br>• ❌ Don't double-dose with other products<br><br><strong>Brands:</strong> Crocin, Dolo-650, Pyrigesic, Panadol`},
+  {p:/\b(water|paani|hydration|pani|dehydration)\b/i,
+   r:`<strong>💧 Hydration Guide</strong><br><br><strong>Daily intake:</strong><br>• Men: ~3.7 L/day | Women: ~2.7 L/day<br>• Practical goal: 8–10 glasses plain water<br><br><strong>Signs of Dehydration:</strong><br>• Dark yellow urine, headache, fatigue, dry mouth<br><br><strong>Tips:</strong><br>• Start with 1–2 glasses warm water on waking<br>• Set phone reminders every 2 hours<br>• Coconut water and ORS count during illness`},
+];
+
+function botReply(msg) {
+  for (const {p,r} of KB) if (p.test(msg)) return r;
+  return `I don't have specific information on <em>"${msg}"</em>.<br><br>For accurate medical advice:<br>• Consult a registered physician or specialist<br>• Call <strong>104 Health Helpline</strong> (India, free)<br>• Visit your nearest clinic<br><br><em>Try: headache, fever, cough, acidity, BP, diabetes, sleep, vitamin D, paracetamol</em>`;
+}
+function addBot(html) {
+  const w=document.getElementById('chatWin');
+  const d=document.createElement('div'); d.className='bubble bot';
+  d.innerHTML=`<div class="bubble-from">MediBot</div><div class="bubble-body">${html}</div>`;
+  w.appendChild(d); w.scrollTop=w.scrollHeight;
+}
+function addUser(txt) {
+  const w=document.getElementById('chatWin');
+  const d=document.createElement('div'); d.className='bubble user';
+  d.innerHTML=`<div class="bubble-body">${txt}</div>`;
+  w.appendChild(d); w.scrollTop=w.scrollHeight;
+}
+function showTyping() {
+  const w=document.getElementById('chatWin');
+  const d=document.createElement('div'); d.className='bubble bot'; d.id='typing';
+  d.innerHTML=`<div class="bubble-body"><div class="typing-dots"><span></span><span></span><span></span></div></div>`;
+  w.appendChild(d); w.scrollTop=w.scrollHeight;
+}
+function sendMsg() {
+  const inp=document.getElementById('chatInp'), msg=inp.value.trim();
+  if (!msg) return;
+  addUser(msg); inp.value='';
+  showTyping();
+  setTimeout(()=>{
+    document.getElementById('typing')?.remove();
+    addBot(botReply(msg));
+  }, 700);
+}
+function quick(msg) {
+  addUser(msg); showTyping();
+  setTimeout(()=>{ document.getElementById('typing')?.remove(); addBot(botReply(msg)); }, 700);
+  goTo('chat', document.querySelector('.nav-item:nth-child(6)'));
+  document.querySelectorAll('.nav-item').forEach((b,i)=>b.classList.toggle('active',i===5));
+  document.querySelectorAll('.bn-item').forEach((b,i)=>b.classList.toggle('active',i===4));
+}
+
+// ── TOAST ──────────────────────────────────────
+function toast(msg, ms=2800) {
+  document.getElementById('toastMsg').textContent = msg;
+  const t=document.getElementById('toast');
+  t.classList.add('show');
+  clearTimeout(t._tmr);
+  t._tmr=setTimeout(()=>t.classList.remove('show'), ms);
+}
+
+// ── HELPERS ────────────────────────────────────
+function v(id) { return document.getElementById(id)?.value || ''; }
+function setV(id, val) { const el=document.getElementById(id); if(el&&val) el.value=val; }
+</script>
+</body>
+</html>
