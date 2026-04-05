@@ -1,1021 +1,220 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Culinary Kinetic | Breakfast for Students & Bachelors</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,700;0,800;1,800&family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-  tailwind.config = {
-    darkMode: "class",
-    theme: {
-      extend: {
-        colors: {
-          "error": "#b02500",
-          "surface": "#f1f8fa",
-          "on-surface": "#293032",
-          "surface-bright": "#f1f8fa",
-          "secondary-dim": "#005c2d",
-          "on-tertiary-container": "#5a4a00",
-          "secondary-fixed-dim": "#5bef90",
-          "primary-fixed-dim": "#f66700",
-          "surface-container-high": "#dae4e7",
-          "inverse-surface": "#080f11",
-          "primary-container": "#ff7a2f",
-          "on-primary-container": "#401500",
-          "on-secondary": "#cdffd4",
-          "surface-tint": "#9c3f00",
-          "on-secondary-fixed-variant": "#006a35",
-          "secondary": "#006a35",
-          "surface-variant": "#d4dfe2",
-          "surface-container": "#e1eaec",
-          "on-background": "#293032",
-          "outline": "#71787a",
-          "on-secondary-fixed": "#004a23",
-          "on-primary-fixed-variant": "#4f1c00",
-          "tertiary-fixed": "#fad538",
-          "on-tertiary": "#fff2ce",
-          "secondary-container": "#6bfe9c",
-          "on-error": "#ffefec",
-          "inverse-primary": "#fe6b00",
-          "surface-dim": "#cbd6da",
-          "surface-container-lowest": "#ffffff",
-          "tertiary-dim": "#5f4e00",
-          "inverse-on-surface": "#979ea0",
-          "secondary-fixed": "#6bfe9c",
-          "on-error-container": "#520c00",
-          "tertiary": "#6d5a00",
-          "on-secondary-container": "#005f2f",
-          "primary-dim": "#893600",
-          "primary": "#9c3f00",
-          "surface-container-highest": "#d4dfe2",
-          "on-tertiary-fixed-variant": "#655300",
-          "surface-container-low": "#eaf2f5",
-          "on-surface-variant": "#565d5f",
-          "tertiary-fixed-dim": "#ebc729",
-          "on-primary-fixed": "#000000",
-          "background": "#f1f8fa",
-          "primary-fixed": "#ff7a2f",
-          "error-container": "#f95630",
-          "tertiary-container": "#fad538",
-          "on-tertiary-fixed": "#443700",
-          "error-dim": "#b92902",
-          "outline-variant": "#a7aeb1",
-          "on-primary": "#fff0ea"
-        },
-        fontFamily: {
-          "headline": ["Plus Jakarta Sans"],
-          "body": ["Be Vietnam Pro"],
-          "label": ["Be Vietnam Pro"]
-        },
-        borderRadius: {
-          "DEFAULT": "1rem",
-          "lg": "2rem",
-          "xl": "3rem",
-          "full": "9999px"
-        },
-      },
-    },
-  }
-</script>
-<style>
-  .no-line-rule { border: none !important; }
-  .tonal-shift-only { transition: background-color 0.3s ease; }
-  .material-symbols-outlined {
-    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-  }
-  .hide-scrollbar::-webkit-scrollbar { display: none; }
-  .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-  body { min-height: max(884px, 100dvh); }
-</style>
-</head>
-<body class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Home | Bhagyashree</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg1: #f4faf7;
+      --bg2: #edf5ff;
+      --text: #1f2d30;
+      --muted: #5f6f73;
+      --card: #ffffff;
+      --border: #dce8e3;
+      --primary: #0d7a71;
+      --primary-dark: #07524d;
+      --accent: #ff8a3d;
+      --shadow: 0 20px 48px rgba(10, 45, 43, 0.12);
+      --radius: 18px;
+    }
 
-<!-- TopAppBar -->
-<header class="fixed top-0 w-full z-50 bg-[#f1f8fa]/70 backdrop-blur-xl shadow-[0px_20px_40px_rgba(41,48,50,0.06)] no-line-rule tonal-shift-only">
-  <div class="flex justify-between items-center px-6 py-4 w-full max-w-7xl mx-auto">
-    <div class="flex items-center gap-4">
-      <button class="hover:opacity-80 transition-opacity scale-95 active:scale-90">
-        <span class="material-symbols-outlined text-primary">menu</span>
-      </button>
-      <span class="text-2xl font-black italic text-[#FF6B00] tracking-tighter font-headline">Culinary Kinetic</span>
-    </div>
-    <nav class="hidden md:flex items-center gap-8">
-      <a class="text-[#FF6B00] font-bold font-headline hover:opacity-80 transition-opacity" href="#">Home</a>
-      <a class="text-on-surface font-headline hover:opacity-80 transition-opacity" href="#">Browse</a>
-      <a class="text-on-surface font-headline hover:opacity-80 transition-opacity" href="#">Saved</a>
-    </nav>
-    <div class="flex items-center gap-4">
-      <button class="material-symbols-outlined text-on-surface-variant hover:opacity-80 transition-opacity">search</button>
-      <div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary-container">
-        <img alt="User" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLnx9Fc4hbdb-2txfgn19gliw2ii6V291wCu9VvXIpDakuP4IvUzux4iEuvJ6V46XtgTW0JV3BHc2JDO6tJ_ZB_0GDXbGKRYsS1c4cuJ9Y-XH5zd0UiyqWDp4k8IdXtXb2iff_VwUcoDugio0kOe-kh7Myh1A7OfJ0V1hOcCt2x8bk6RwAOT0IsmYr0g0pMt9mS26-Sx-rfxVI-T7Ql2srmZva8LyZMJrXF2n53-eWdCaXvL5f9rzrMmTL5qzKr9MEPKbWM_UE52M"/>
-      </div>
-    </div>
-  </div>
-</header>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-<main class="pt-24 pb-32">
+    body {
+      min-height: 100vh;
+      font-family: "Manrope", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 8% 5%, rgba(13, 122, 113, 0.16), transparent 25%),
+        radial-gradient(circle at 92% 0%, rgba(255, 138, 61, 0.22), transparent 24%),
+        linear-gradient(150deg, var(--bg1), var(--bg2));
+      padding: 26px 14px;
+    }
 
-  <!-- Page Title + Search -->
-  <section class="px-6 pt-8 mb-10">
-    <div class="max-w-7xl mx-auto">
-      <p class="font-label text-xs uppercase tracking-[0.2em] font-bold text-secondary mb-2">🌿 100% Vegetarian · For Students &amp; Bachelors</p>
-      <h1 class="font-headline text-4xl md:text-5xl font-extrabold text-on-surface leading-tight tracking-tight mb-6">
-        Breakfast <span class="text-primary italic">Recipes</span>
-      </h1>
-      <div class="flex flex-col sm:flex-row gap-4 mb-6">
-        <div class="relative flex-grow max-w-xl">
-          <span class="material-symbols-outlined absolute left-5 top-1/2 -translate-y-1/2 text-outline">search</span>
-          <input id="recipe-search" class="w-full pl-14 pr-6 py-4 bg-surface-container-highest rounded-full border-none focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all placeholder:text-outline-variant font-medium" placeholder="Search veg breakfast recipes..." type="text"/>
-        </div>
-      </div>
-      <div class="flex gap-2 overflow-x-auto pb-1 hide-scrollbar">
-        <button class="bg-primary text-white px-5 py-2 rounded-full font-bold text-sm whitespace-nowrap flex-shrink-0">All</button>
-        <button class="bg-surface-container-lowest text-on-surface px-5 py-2 rounded-full font-bold text-sm whitespace-nowrap flex-shrink-0 hover:bg-white/80 transition-all">⚡ 5 Min</button>
-        <button class="bg-surface-container-lowest text-on-surface px-5 py-2 rounded-full font-bold text-sm whitespace-nowrap flex-shrink-0 hover:bg-white/80 transition-all">🥣 No-Cook</button>
-        <button class="bg-surface-container-lowest text-on-surface px-5 py-2 rounded-full font-bold text-sm whitespace-nowrap flex-shrink-0 hover:bg-white/80 transition-all">🔥 Microwave</button>
-      </div>
-    </div>
-  </section>
+    .wrap {
+      max-width: 1080px;
+      margin: 0 auto;
+      display: grid;
+      gap: 16px;
+      animation: fadeUp 0.55s ease;
+    }
 
-  <!-- RECIPES GRID -->
-  <section class="px-6 mb-16">
-    <div class="max-w-7xl mx-auto">
-      <div id="recipe-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+    .hero {
+      background: linear-gradient(125deg, #0d7a71 0%, #2ca99b 70%);
+      color: #f4fffd;
+      border-radius: calc(var(--radius) + 4px);
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
 
-        <!-- Poha -->
-        <div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0px_20px_40px_rgba(41,48,50,0.06)] group cursor-pointer transition-all hover:-translate-y-2" onclick="openRecipe('poha')">
-          <div class="aspect-video relative overflow-hidden">
-            <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDiqAlF1OC1fcU6vO0VQfGDpLb2bRsN751wb-AyNMGFr8pH1iww_CZekF7z_jq6jCpopfe5O8pPq69ChNKWjXlo9Nb0rcN47ONLNB1A_c6nN60VOJui68PWlkt7K6rMsY21H197JKxgXSjtjXq5CpmS4Yu2vXEooXZL8y-C42E8H_nouEG1n-NKcRiimyjLg0dtZeI7zUXQKNI3xxHaLFzD7Mq9X-ypozaf2AKBtBJi3iqUWd40i2jQtfjiQd4EbGbHUdDN4KB8Ok"
-              alt="Poha"/>
-            <div class="absolute top-4 left-4 flex gap-2">
-              <span class="bg-tertiary-container text-on-tertiary-container px-3 py-1 rounded-full text-[10px] font-bold uppercase">10 Min</span>
-            </div>
-          </div>
-          <div class="p-6">
-            <h3 class="font-headline font-extrabold text-xl mb-2 text-on-surface">Instant Poha</h3>
-            <p class="text-on-surface-variant text-sm mb-4 line-clamp-2">Flattened rice tempered with peanuts and curry leaves. The classic student staple.</p>
-            <div class="flex items-center justify-between">
-              <div class="flex gap-3 text-xs font-bold text-outline uppercase">
-                <span>10 MINS</span>
-              </div>
-              <button class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-primary hover:bg-surface-container-high transition-colors">
-                <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
-              </button>
-            </div>
-          </div>
-        </div>
+    .hero h1 {
+      font-family: "Outfit", sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      line-height: 1.05;
+      letter-spacing: 0.3px;
+      margin-bottom: 8px;
+    }
 
-        <!-- Upma -->
-        <div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0px_20px_40px_rgba(41,48,50,0.06)] group cursor-pointer transition-all hover:-translate-y-2" onclick="openRecipe('upma')">
-          <div class="aspect-video relative overflow-hidden">
-            <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBM5uLRniximoRfiodMwuz-2HFN4V3molv6HMr8hgOV3hAwR6Bk4NjB0ugSXWb3oUOnRI40wG-Er6nMlvnUjDufiw5zM8_szZ-PQlnLUeSQxgPmfj0BNy0yW9SE41u20FJmv8qXmShPqaN6XuY9VP2AJR1YtLb0dKRtu_sPRecYCcGyuc1ufSNv7ViGzqkhABGA_LgudwEP2X4FrUxRHDwgNJOSstgQkwEdnIqpLyNU0FssBhDJfyslyzqYvPthLNEjMBct0ixyo5k"
-              alt="Upma"/>
-            <div class="absolute top-4 left-4 flex gap-2">
-              <span class="bg-tertiary-container text-on-tertiary-container px-3 py-1 rounded-full text-[10px] font-bold uppercase">8 Min</span>
-              <span class="bg-primary text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase">🔥 Microwave</span>
-            </div>
-          </div>
-          <div class="p-6">
-            <h3 class="font-headline font-extrabold text-xl mb-2 text-on-surface">Microwave Upma</h3>
-            <p class="text-on-surface-variant text-sm mb-4 line-clamp-2">Semolina upma made entirely in the microwave. No watching the stove!</p>
-            <div class="flex items-center justify-between">
-              <div class="flex gap-3 text-xs font-bold text-outline uppercase">
-                <span>8 MINS</span>
-              </div>
-              <button class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-primary hover:bg-surface-container-high transition-colors">
-                <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
-              </button>
-            </div>
-          </div>
-        </div>
+    .hero p {
+      color: rgba(244, 255, 253, 0.92);
+      max-width: 720px;
+    }
 
-        <!-- Masala Sandwich -->
-        <div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0px_20px_40px_rgba(41,48,50,0.06)] group cursor-pointer transition-all hover:-translate-y-2" onclick="openRecipe('sandwich')">
-          <div class="aspect-video relative overflow-hidden">
-            <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCV-WDlIxefnuld4ruhbIab9dNpGrI7WgQbdyHyZab8fytTU8W0rpieFPhxkjSTEd-QxD5aYa2eHhsuuit_Vj-i0UmexpubksDtTQN2WIfRjPuAVj1oK4dQ3hLKCiVLZ132jpVQDFzJHvNOMkGbdYcg6IXKCi4rsGaLw18BRNQPvdeJRDdZWDCJqSrBS3G8m71swSrhCoBOixKuiezdX-97iG4LAudtEu2dYZ0h-oBt7W4GcCu4JW7GemGVXNdSSGTPJgikJqrtmtk"
-              alt="Masala Sandwich"/>
-            <div class="absolute top-4 left-4 flex gap-2">
-              <span class="bg-tertiary-container text-on-tertiary-container px-3 py-1 rounded-full text-[10px] font-bold uppercase">10 Min</span>
-              <span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-[10px] font-bold uppercase">Pantry Hero</span>
-            </div>
-          </div>
-          <div class="p-6">
-            <h3 class="font-headline font-extrabold text-xl mb-2 text-on-surface">Street-Style Masala Sandwich</h3>
-            <p class="text-on-surface-variant text-sm mb-4 line-clamp-2">Mumbai morning staple. Quick, spicy, and perfectly toasted on a flat pan.</p>
-            <div class="flex items-center justify-between">
-              <div class="flex gap-3 text-xs font-bold text-outline uppercase">
-                <span>10 MINS</span>
-              </div>
-              <button class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-primary hover:bg-surface-container-high transition-colors">
-                <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
-              </button>
-            </div>
-          </div>
-        </div>
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(260px, 1fr));
+      gap: 14px;
+    }
 
-        <!-- Oats Chilla -->
-        <div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0px_20px_40px_rgba(41,48,50,0.06)] group cursor-pointer transition-all hover:-translate-y-2" onclick="openRecipe('chilla')">
-          <div class="aspect-video relative overflow-hidden">
-            <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBemxyTGQT6oNV_rmor_Y_e69r8K-Vl3Hg6i8uJvaOvX90KhfYRitphrehX7HBaee3XsWSY3GPLGm96q-zm1C9TOH7EXn3MVIZYsawRs0zVnV5s4L99QbclO_2OAMnvkp2qHM2l0Pu_Cba35cjQA0p0O7woeJZgzu79dAq__fDYXdukTLbl3ltpjvfmnmVJOcfF6ApdgCuiLu3oFRFQt3ePmqBx28gAsiuQxVQvQDOWPbQAuJWteBg53uNYoQo5sBXYCfK0bbwG3Jw"
-              alt="Oats Chilla"/>
-            <div class="absolute top-4 left-4 flex gap-2">
-              <span class="bg-tertiary-container text-on-tertiary-container px-3 py-1 rounded-full text-[10px] font-bold uppercase">⚡ 5 Min</span>
-            </div>
-          </div>
-          <div class="p-6">
-            <h3 class="font-headline font-extrabold text-xl mb-2 text-on-surface">Instant Oats Chilla</h3>
-            <p class="text-on-surface-variant text-sm mb-4 line-clamp-2">Savory oat pancakes with grated carrots and green chilies. High-fiber, no maida.</p>
-            <div class="flex items-center justify-between">
-              <div class="flex gap-3 text-xs font-bold text-outline uppercase">
-                <span>5 MINS</span>
-              </div>
-              <button class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-primary hover:bg-surface-container-high transition-colors">
-                <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
-              </button>
-            </div>
-          </div>
-        </div>
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+      display: grid;
+      gap: 10px;
+    }
 
-        <!-- Aloo Paratha -->
-        <div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0px_20px_40px_rgba(41,48,50,0.06)] group cursor-pointer transition-all hover:-translate-y-2" onclick="openRecipe('paratha')">
-          <div class="aspect-video relative overflow-hidden">
-            <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKy8dZ1kU-P24RSYVR9ckHNKynLRhGD89S9Diht2i3W8cg5GHpi5CKTA8iVM3ggOFFY8F26MvSWWfqBbKpZW59AAEhlUDpxv_lgqlx7PlbCZw3NcXb-lE2y1fE31lL0VmFf-LFbpumDEUb_EOvvtSMVqX5OWyD5UNkOLlDynUPjX7KOatpLFfLRFevGQOtSrgi16TdR_206OrOakoUAt9lRmqFs-7zE_pQK2ct3dfsKFjrsbuloCFxx4UmvYQKhwhiQRWK4YqXlMo"
-              alt="Aloo Paratha"/>
-            <div class="absolute top-4 left-4 flex gap-2">
-              <span class="bg-tertiary-container text-on-tertiary-container px-3 py-1 rounded-full text-[10px] font-bold uppercase">⚡ 5 Min</span>
-            </div>
-          </div>
-          <div class="p-6">
-            <h3 class="font-headline font-extrabold text-xl mb-2 text-on-surface">5-Min Aloo Paratha Hack</h3>
-            <p class="text-on-surface-variant text-sm mb-4 line-clamp-2">Use leftover boiled potatoes and ready-made dough. Speed-hack version!</p>
-            <div class="flex items-center justify-between">
-              <div class="flex gap-3 text-xs font-bold text-outline uppercase">
-                <span>5 MINS</span>
-              </div>
-              <button class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-primary hover:bg-surface-container-high transition-colors">
-                <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
-              </button>
-            </div>
-          </div>
-        </div>
+    .tag {
+      display: inline-flex;
+      width: fit-content;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      background: #e8f8f4;
+      color: #0d7a71;
+    }
 
-        <!-- PB Power Bowl -->
-        <div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0px_20px_40px_rgba(41,48,50,0.06)] group cursor-pointer transition-all hover:-translate-y-2" onclick="openRecipe('pb')">
-          <div class="aspect-video relative overflow-hidden">
-            <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCV4aMez7Jcd-mrfPcVpjG-s_pWP9Vl4kB8-Wiis6tAL8o-S2dLQ13vpxDhoB5csXhBf9d2-FCRqiQ9hDqJxA_pSrR5FeH63-_oJvIAsCbMp-AIRSSyzujXo7Bwu2Gwpkm2IZ2eSAM4hclcfgdBa73OqLCoRFx4m_XK80oKr80bOTha-_Q0KwBMa11dEAneeY1tBD-kDPHD4HAmM9Dlfr6jlrYPjNHJ4FMNpAQxDX1MycfjQu8jCAbaneUwrgZVZ91ovbSB9yReDNA"
-              alt="PB Bowl"/>
-            <div class="absolute top-4 left-4 flex gap-2">
-              <span class="bg-tertiary-container text-on-tertiary-container px-3 py-1 rounded-full text-[10px] font-bold uppercase">⚡ 5 Min</span>
-              <span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-[10px] font-bold uppercase">High Protein</span>
-            </div>
-          </div>
-          <div class="p-6">
-            <h3 class="font-headline font-extrabold text-xl mb-2 text-on-surface">Peanut Butter Power Bowl</h3>
-            <p class="text-on-surface-variant text-sm mb-4 line-clamp-2">Oats, PB, banana and honey. The ultimate 5-minute survival meal between lectures.</p>
-            <div class="flex items-center justify-between">
-              <div class="flex gap-3 text-xs font-bold text-outline uppercase">
-                <span>5 MINS</span>
-              </div>
-              <button class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-primary hover:bg-surface-container-high transition-colors">
-                <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
-              </button>
-            </div>
-          </div>
-        </div>
+    .card h2 {
+      font-family: "Outfit", sans-serif;
+      font-size: 1.35rem;
+      line-height: 1.15;
+    }
 
-        <!-- Berry Smoothie -->
-        <div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0px_20px_40px_rgba(41,48,50,0.06)] group cursor-pointer transition-all hover:-translate-y-2" onclick="openRecipe('berry')">
-          <div class="aspect-video relative overflow-hidden">
-            <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBILb70qQAZ6gI2OuimDs4mP6cDQoRgMdlYHfOgywPyX5bgioAPxirRLbqTqTwY2cI1SuCdP9kQmNyETcBy_hmCun9cxLDQrkGtNT1kC9n20FF1QzS3efe6Q2wkka83DDesNm0nQcdylKTLpz5q0_Rg4A_AmoT8d6V_cpBEwOBxXrqNNbPQNFYS-E1JsCkKnl-vOPv-iVyyt2CQSYw7iUZoQDTPELf7nLZRr9v7o1QakOt5WWHqJbkxR64apTQ6xoKRhyqc6vDnE8o"
-              alt="Berry Smoothie"/>
-            <div class="absolute top-4 left-4 flex gap-2">
-              <span class="bg-tertiary-container text-on-tertiary-container px-3 py-1 rounded-full text-[10px] font-bold uppercase">⚡ 2 Min</span>
-              <span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-[10px] font-bold uppercase">🥣 No-Cook</span>
-            </div>
-          </div>
-          <div class="p-6">
-            <h3 class="font-headline font-extrabold text-xl mb-2 text-on-surface">Berry Rush Smoothie</h3>
-            <p class="text-on-surface-variant text-sm mb-4 line-clamp-2">Frozen berries, yogurt and banana blended in 2 minutes. Zero cooking needed.</p>
-            <div class="flex items-center justify-between">
-              <div class="flex gap-3 text-xs font-bold text-outline uppercase">
-                <span>2 MINS</span>
-              </div>
-              <button class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-primary hover:bg-surface-container-high transition-colors">
-                <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
-              </button>
-            </div>
-          </div>
-        </div>
+    .card p {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
 
-        <!-- Indori Poha -->
-        <div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0px_20px_40px_rgba(41,48,50,0.06)] group cursor-pointer transition-all hover:-translate-y-2" onclick="openRecipe('poha')">
-          <div class="aspect-video relative overflow-hidden">
-            <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBt4kpsaU2PQXH4-DZzG68yVSr_48L7fXCtuFv8eIy3B4spr4zf4vwsRH1CmlUqWChMN5Lay9B3UgSFoP1vBxf8fqxBJgaqbwxA7G0SpVVjR8b7R3Q5wuiWscFweMURNpZB1cWDaeORrH7aMtZzMsSNXvYlDXiZDqnjswNa5oEo4UzLz0TT594lFpZ8Nww4_mBOhgXrOsnlZzgUebJa8v_m_-Y0PAgx8HdtCBd0E9ddvZA7AeeshyZC0ij9G_AFrxa6xxFjabXTtKw"
-              alt="Indori Poha"/>
-            <div class="absolute top-4 left-4 flex gap-2">
-              <span class="bg-tertiary-container text-on-tertiary-container px-3 py-1 rounded-full text-[10px] font-bold uppercase">15 Min</span>
-            </div>
-          </div>
-          <div class="p-6">
-            <h3 class="font-headline font-extrabold text-xl mb-2 text-on-surface">Indori Poha</h3>
-            <p class="text-on-surface-variant text-sm mb-4 line-clamp-2">Extra crunchy sev on top, lime squeeze. The Indore way to start your day.</p>
-            <div class="flex items-center justify-between">
-              <div class="flex gap-3 text-xs font-bold text-outline uppercase">
-                <span>15 MINS</span>
-              </div>
-              <button class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-primary hover:bg-surface-container-high transition-colors">
-                <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
-              </button>
-            </div>
-          </div>
-        </div>
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 2px;
+    }
 
-      </div>
-      <p id="no-search-results" class="hidden text-center text-on-surface-variant font-bold mt-8">No recipes found.</p>
-    </div>
-  </section>
+    .btn {
+      border: none;
+      border-radius: 12px;
+      padding: 10px 14px;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.15s ease, opacity 0.2s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-  <!-- IGNORE old sections below — replaced by recipe grid above -->
-  <!-- Categories Section -->
-  <section id="all-recipes" class="px-6 mb-20">
-    <div class="max-w-7xl mx-auto">
-      <div class="flex items-end justify-between mb-8">
-        <div>
-          <span class="font-label text-[10px] uppercase tracking-[0.2em] font-bold text-secondary mb-2 block">Quick Filters</span>
-          <h2 class="font-headline text-3xl font-bold">Breakfast Categories</h2>
-        </div>
-        <a class="text-primary font-bold flex items-center gap-1 hover:gap-2 transition-all" href="#">View all <span class="material-symbols-outlined text-sm">arrow_forward</span></a>
-      </div>
+    .btn:hover {
+      transform: translateY(-1px);
+    }
 
-      <!-- Filter Bento Row -->
-      <div class="grid grid-cols-1 gap-6 mb-12">
-        <!-- Time Filter -->
-        <div class="bg-surface-container-low rounded-xl p-8">
-          <p class="font-label text-[10px] uppercase tracking-widest font-bold text-outline-variant mb-4">Prep Time</p>
-          <div class="flex flex-wrap gap-3">
-            <button class="bg-primary text-white px-5 py-2 rounded-full font-bold transition-all active:scale-95 hover:opacity-90">5 Min</button>
-            <button class="bg-surface-container-lowest text-on-surface px-5 py-2 rounded-full font-bold hover:bg-white/80 transition-all active:scale-95">10 Min</button>
-            <button class="bg-surface-container-lowest text-on-surface px-5 py-2 rounded-full font-bold hover:bg-white/80 transition-all active:scale-95">15 Min</button>
-          </div>
-        </div>
-      </div>
+    .btn-primary {
+      background: var(--primary);
+      color: #effffb;
+    }
 
-      <!-- Category Cards Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <!-- Category 1 -->
-        <div class="group relative aspect-[4/3] rounded-xl overflow-hidden bg-surface-container-high transition-all hover:-translate-y-2 cursor-pointer">
-          <img class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDiqAlF1OC1fcU6vO0VQfGDpLb2bRsN751wb-AyNMGFr8pH1iww_CZekF7z_jq6jCpopfe5O8pPq69ChNKWjXlo9Nb0rcN47ONLNB1A_c6nN60VOJui68PWlkt7K6rMsY21H197JKxgXSjtjXq5CpmS4Yu2vXEooXZL8y-C42E8H_nouEG1n-NKcRiimyjLg0dtZeI7zUXQKNI3xxHaLFzD7Mq9X-ypozaf2AKBtBJi3iqUWd40i2jQtfjiQd4EbGbHUdDN4KB8Ok"
-            alt="5-Min Favorites"/>
-          <div class="absolute inset-0 bg-gradient-to-t from-on-surface via-on-surface/20 to-transparent"></div>
-          <div class="absolute bottom-6 left-6 right-6">
-            <span class="text-white/80 font-bold uppercase text-[10px] tracking-widest mb-1 block">The Essentials</span>
-            <h3 class="text-white text-2xl font-bold font-headline">5-Min Favorites</h3>
-          </div>
-        </div>
-        <!-- Category 2 -->
-        <div class="group relative aspect-[4/3] rounded-xl overflow-hidden bg-surface-container-high transition-all hover:-translate-y-2 cursor-pointer">
-          <img class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTp7FEZoqgPkywvAnCLbzhL0eMuWjkyJjfbwTFWC_OH71gpKFKsvOZ4rzxFGV3dRPLvINRwhRQZXgmuBH5-yP2BjNcvJiCbR33qJ4Ez1V5zaZFFeS_0YarTAdu_jecpXoyLbCirVFh_De-2-ee6wHiz2-9FQVuZ7L_l1UmvOMTvw6I8O70jux5eTwf576mVcSY1W9v9Q2k-li3kehsza2o7NWzX1-M2nLwGI3b7pbHdDjrZdj8iz1zzqpBflDEIzv2XU9QDI17y3M"
-            alt="Pantry Staples"/>
-          <div class="absolute inset-0 bg-gradient-to-t from-on-surface via-on-surface/20 to-transparent"></div>
-          <div class="absolute bottom-6 left-6 right-6">
-            <span class="text-white/80 font-bold uppercase text-[10px] tracking-widest mb-1 block">Wallet Friendly</span>
-            <h3 class="text-white text-2xl font-bold font-headline">Pantry Staples Only</h3>
-          </div>
-        </div>
-        <!-- Category 3 -->
-        <div class="group relative aspect-[4/3] rounded-xl overflow-hidden bg-surface-container-high transition-all hover:-translate-y-2 cursor-pointer">
-          <img class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBM5uLRniximoRfiodMwuz-2HFN4V3molv6HMr8hgOV3hAwR6Bk4NjB0ugSXWb3oUOnRI40wG-Er6nMlvnUjDufiw5zM8_szZ-PQlnLUeSQxgPmfj0BNy0yW9SE41u20FJmv8qXmShPqaN6XuY9VP2AJR1YtLb0dKRtu_sPRecYCcGyuc1ufSNv7ViGzqkhABGA_LgudwEP2X4FrUxRHDwgNJOSstgQkwEdnIqpLyNU0FssBhDJfyslyzqYvPthLNEjMBct0ixyo5k"
-            alt="Single Bowl Meals"/>
-          <div class="absolute inset-0 bg-gradient-to-t from-on-surface via-on-surface/20 to-transparent"></div>
-          <div class="absolute bottom-6 left-6 right-6">
-            <span class="text-white/80 font-bold uppercase text-[10px] tracking-widest mb-1 block">Zero Cleanup</span>
-            <h3 class="text-white text-2xl font-bold font-headline">Single Bowl Meals</h3>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+    .btn-secondary {
+      background: #f1f6f4;
+      color: #2a4345;
+    }
 
-  <!-- Horizontal Category Scroll -->
-  <section class="px-6 mb-20">
-    <div class="max-w-7xl mx-auto">
-      <div class="flex justify-between items-end mb-8">
-        <h3 class="text-3xl font-headline font-bold">Quick Categories</h3>
-        <a class="text-primary font-bold flex items-center gap-1 hover:gap-2 transition-all" href="#">View all <span class="material-symbols-outlined">arrow_forward</span></a>
-      </div>
-      <div class="flex overflow-x-auto hide-scrollbar gap-6 pb-4">
-        <!-- Poha -->
-        <div class="min-w-[260px] group cursor-pointer flex-shrink-0">
-          <div class="h-48 rounded-xl overflow-hidden mb-4 relative">
-            <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBt4kpsaU2PQXH4-DZzG68yVSr_48L7fXCtuFv8eIy3B4spr4zf4vwsRH1CmlUqWChMN5Lay9B3UgSFoP1vBxf8fqxBJgaqbwxA7G0SpVVjR8b7R3Q5wuiWscFweMURNpZB1cWDaeORrH7aMtZzMsSNXvYlDXiZDqnjswNa5oEo4UzLz0TT594lFpZ8Nww4_mBOhgXrOsnlZzgUebJa8v_m_-Y0PAgx8HdtCBd0E9ddvZA7AeeshyZC0ij9G_AFrxa6xxFjabXTtKw"
-              alt="Poha"/>
-            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-            <span class="absolute bottom-4 left-4 text-white font-headline font-black text-2xl">Poha</span>
-          </div>
-        </div>
-        <!-- Upma -->
-        <div class="min-w-[260px] group cursor-pointer flex-shrink-0">
-          <div class="h-48 rounded-xl overflow-hidden mb-4 relative">
-            <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAd_-HdTaVPCTcUp3COo7nekMLfJVlo21eQNlud_afAj-87VqbEVkaXApWIwGIxCgz4Nw0haUosWXipkPq_FLb-_y2kCQvNTfRFLMw6clqtdB_FKRx7zttPpsQqzh6poosoD25xgYrkjDbYDSO9cjZBJ8fs255BlIPgVZLF45JYReOyLK3nlVA1qk9AuCLr3FoNfEaKH03o3KtqZdfvdF84JkIzftCVq1SMP2BCgzYZhYL8AJ_pCXX-ycALehs6aN1nN_Efo0qAdC8"
-              alt="Upma"/>
-            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-            <span class="absolute bottom-4 left-4 text-white font-headline font-black text-2xl">Upma</span>
-          </div>
-        </div>
-        <!-- Parathas -->
-        <div class="min-w-[260px] group cursor-pointer flex-shrink-0">
-          <div class="h-48 rounded-xl overflow-hidden mb-4 relative">
-            <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKy8dZ1kU-P24RSYVR9ckHNKynLRhGD89S9Diht2i3W8cg5GHpi5CKTA8iVM3ggOFFY8F26MvSWWfqBbKpZW59AAEhlUDpxv_lgqlx7PlbCZw3NcXb-lE2y1fE31lL0VmFf-LFbpumDEUb_EOvvtSMVqX5OWyD5UNkOLlDynUPjX7KOatpLFfLRFevGQOtSrgi16TdR_206OrOakoUAt9lRmqFs-7zE_pQK2ct3dfsKFjrsbuloCFxx4UmvYQKhwhiQRWK4YqXlMo"
-              alt="Parathas"/>
-            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-            <span class="absolute bottom-4 left-4 text-white font-headline font-black text-2xl">Parathas</span>
-          </div>
-        </div>
-        <!-- Dosas -->
-        <div class="min-w-[260px] group cursor-pointer flex-shrink-0">
-          <div class="h-48 rounded-xl overflow-hidden mb-4 relative">
-            <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFZMsGsph4NL_Dde8W6CUE-BZnBtjGh9ZfsWHlIjKcyhkcO_NFVjelTg5XrGu4W5ltpVUe6iPez26uSbx0vvIV31UZwPBUXc8WRCBcn_uvi-xYPT8izmwaLtpTsfpeTaA7H0sFSUCoVFdLBWQp3snzUX-TPUgJHKI4TseE53OhjsGI3JonCFc3cckVpy-Z06xTggTdMWNTTZzmzP1VzaxAIoOjJVHeUIeanqclxONdJOqnSJK4EenxRZ3pjeI7ALvgBh8mxPa2qjk"
-              alt="Dosas"/>
-            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-            <span class="absolute bottom-4 left-4 text-white font-headline font-black text-2xl">Dosas</span>
-          </div>
-        </div>
-        <!-- Eggs -->
-        <div class="min-w-[260px] group cursor-pointer flex-shrink-0">
-          <div class="h-48 rounded-xl overflow-hidden mb-4 relative">
-            <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfIZBuL2haJdYWBGTfaKeHo975PqZqUjJSCHkXoLNuIB03twbjXgYZHLpuE75qeSDZTQC10flivfitcMC6SXMeplPX9X5CyLlHtpDAUqEQK4zeOkNAoC11eIQgm8qgMC8BFW-apt5ypXzATFVAy5r8y6BQtQuiEuwuFsvL9R_t-hbm-LGcybVIdkSKGRaKboaExzUM6jTlD1HM-fhJy5ZvnxC8JIuA2UpL5QpzC9AmPmYB8kAAXQRmkHkDOiGoiT1NaeOm2MBX2PA"
-              alt="Egg Dishes"/>
-            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-            <span class="absolute bottom-4 left-4 text-white font-headline font-black text-2xl">Eggs</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+    .note {
+      background: #fff7ef;
+      color: #6b4828;
+      border: 1px solid #ffd7b4;
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 0.9rem;
+    }
 
-  <!-- Featured Recipes — Asymmetric Grid -->
-  <section class="px-6 mb-20">
-    <div class="max-w-7xl mx-auto">
-      <div class="flex items-center justify-between mb-12">
-        <h2 class="font-headline text-4xl font-black italic tracking-tighter">Hottest Right Now</h2>
-        <button class="text-primary font-bold flex items-center gap-2 group">
-          Explore All <span class="material-symbols-outlined transition-transform group-hover:translate-x-1">arrow_forward</span>
-        </button>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
-
-        <!-- Featured Card 1: Large (7 cols) -->
-        <div class="md:col-span-7 bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0px_20px_40px_rgba(41,48,50,0.06)] flex flex-col md:flex-row cursor-pointer" onclick="openRecipe('poha')">
-          <div class="md:w-1/2 aspect-square md:aspect-auto relative">
-            <img class="w-full h-full object-cover"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfIZBuL2haJdYWBGTfaKeHo975PqZqUjJSCHkXoLNuIB03twbjXgYZHLpuE75qeSDZTQC10flivfitcMC6SXMeplPX9X5CyLlHtpDAUqEQK4zeOkNAoC11eIQgm8qgMC8BFW-apt5ypXzATFVAy5r8y6BQtQuiEuwuFsvL9R_t-hbm-LGcybVIdkSKGRaKboaExzUM6jTlD1HM-fhJy5ZvnxC8JIuA2UpL5QpzC9AmPmYB8kAAXQRmkHkDOiGoiT1NaeOm2MBX2PA"
-              alt="Instant Poha"/>
-            <div class="absolute top-4 left-4">
-              <span class="bg-tertiary-container text-on-tertiary-container px-3 py-1 rounded-full text-xs font-bold font-label uppercase">Best Seller</span>
-            </div>
-          </div>
-          <div class="md:w-1/2 p-8 flex flex-col justify-center">
-            <div class="flex gap-4 mb-4">
-              <div class="flex items-center gap-1 text-on-surface-variant text-xs font-medium">
-                <span class="material-symbols-outlined text-[16px]">schedule</span> 10 MINS
-              </div>
-            </div>
-            <h3 class="font-headline text-3xl font-extrabold mb-4 leading-tight">Instant Poha</h3>
-            <p class="text-on-surface-variant mb-8 line-clamp-2">The classic student staple. Flattened rice tempered with peanuts and curry leaves. No boiling required!</p>
-            <button class="w-full bg-secondary-container text-on-secondary-container py-3 rounded-full font-bold flex items-center justify-center gap-2 hover:bg-secondary/20 transition-colors">
-              View Recipe <span class="material-symbols-outlined text-[18px]">play_circle</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- Featured Card 2: Small (5 cols) -->
-        <div class="md:col-span-5 bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0px_20px_40px_rgba(41,48,50,0.06)] group cursor-pointer" onclick="openRecipe('upma')">
-          <div class="aspect-video relative overflow-hidden">
-            <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyngVYA5S9k2kFMgzRXDw8ljdhqUOOob2jpDSlWE1JUSArwXvTlPfACyDREeJ9BZ90EUSmYYoETv0Wl7z8d3RMpTarTmaxa3Ex8JrSW6-GUhAMQFZEvoznzt3v8Y9q8UgxAm_J3WQSoSTRDqpOrlabeiEAnXZG92vaSjzzd20F0oxydr3Ui1gH3aBT6SDBfJn_ytFFqDScmxXVx197iubCcexfVxb_CkTr0FMk-AkunVu6UW1gwjekrSDz2veZlynnxTl5-jOi6Gk"
-              alt="Microwave Upma"/>
-          </div>
-          <div class="p-8">
-            <div class="flex justify-between items-start mb-4">
-              <h3 class="font-headline text-2xl font-bold">Microwave Upma</h3>
-              <span class="material-symbols-outlined text-primary cursor-pointer">favorite</span>
-            </div>
-            <div class="flex items-center gap-4 text-sm text-on-surface-variant font-medium uppercase tracking-wider mb-2">
-              <span>8 Mins</span>
-              <span>•</span>
-              <span>Vegetarian</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Featured Card 3: Full width horizontal (12 cols) -->
-        <div class="md:col-span-12 bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0px_20px_40px_rgba(41,48,50,0.06)] grid md:grid-cols-3 cursor-pointer" onclick="openRecipe('omelette')">
-          <div class="p-8 md:col-span-1 flex flex-col justify-center">
-            <span class="text-primary font-black italic mb-2 tracking-tighter">Street Favorite</span>
-            <h3 class="font-headline text-3xl font-extrabold mb-4">Aloo Tikki Burger</h3>
-            <p class="text-on-surface-variant mb-6 leading-relaxed">Crispy aloo tikki, fresh veggies, and spicy chutney inside a toasted bun. A perfect quick snack-meal.</p>
-            <div class="flex items-center gap-3">
-              <div class="bg-surface-container p-2 rounded-lg">
-                <span class="text-xs font-bold block text-on-surface-variant">CAL</span>
-                <span class="font-bold text-primary">340</span>
-              </div>
-              <div class="bg-surface-container p-2 rounded-lg">
-                <span class="text-xs font-bold block text-on-surface-variant">TIME</span>
-                <span class="font-bold text-primary">7 min</span>
-              </div>
-            </div>
-          </div>
-          <div class="md:col-span-2 relative min-h-[300px]">
-            <img class="absolute inset-0 w-full h-full object-cover"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFvBMiSE-2acEwB6s_NGEsAC8jzIor7XouqC8TWAGbRg9nIOn2MCj9IKS_dKkJwXlZHcsctyFoqe_auTtSIy6heFRhJEUBll4yR1B9_YI8haFS55nq-TQ4n0cfhlZhF4zuKy9W0NdOvZ9ZoSnHVvJMZJ1J_J12dToL42SxQTH2aIHRg_9I5hqmPCOMaQXQLpXcvsGlGijtCigt3d2DyslHFhaywIZZYV2KgmpjxXJIiosgvxnl29s4BmHz5sCWHVl67K7ESfrxeow"
-              alt="Aloo Tikki Burger"/>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Browse All Recipes — Asymmetric List -->
-  <section class="px-6 mb-20">
-    <div class="max-w-7xl mx-auto">
-      <div class="flex items-end justify-between mb-8">
-        <div>
-          <span class="font-label text-[10px] uppercase tracking-[0.2em] font-bold text-secondary mb-2 block">
-            <span class="material-symbols-outlined text-sm align-middle">bolt</span> Student Approved
-          </span>
-          <h2 class="font-headline text-3xl font-bold">All Breakfast Recipes</h2>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8">
-
-        <!-- Featured Left Card -->
-        <article class="lg:col-span-7 bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0px_20px_40px_rgba(41,48,50,0.06)] flex flex-col md:flex-row h-full cursor-pointer" onclick="openRecipe('sandwich')">
-          <div class="md:w-1/2 h-64 md:h-full relative">
-            <img class="w-full h-full object-cover"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCV-WDlIxefnuld4ruhbIab9dNpGrI7WgQbdyHyZab8fytTU8W0rpieFPhxkjSTEd-QxD5aYa2eHhsuuit_Vj-i0UmexpubksDtTQN2WIfRjPuAVj1oK4dQ3hLKCiVLZ132jpVQDFzJHvNOMkGbdYcg6IXKCi4rsGaLw18BRNQPvdeJRDdZWDCJqSrBS3G8m71swSrhCoBOixKuiezdX-97iG4LAudtEu2dYZ0h-oBt7W4GcCu4JW7GemGVXNdSSGTPJgikJqrtmtk"
-              alt="Masala Sandwich"/>
-            <div class="absolute top-4 left-4">
-              <span class="bg-tertiary-container text-on-tertiary-container px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase">Pantry Hero</span>
-            </div>
-          </div>
-          <div class="md:w-1/2 p-8 flex flex-col justify-between">
-            <div>
-              <div class="flex items-center gap-4 text-outline mb-3">
-                <span class="flex items-center gap-1 text-xs font-bold uppercase tracking-widest">
-                  <span class="material-symbols-outlined text-sm">timer</span> 10 MINS
-                </span>
-                <span class="flex items-center gap-1 text-xs font-bold uppercase tracking-widest">
-                  <span class="material-symbols-outlined text-sm">equalizer</span> NOVICE
-                </span>
-              </div>
-              <h4 class="text-3xl font-headline font-extrabold leading-tight mb-4">Street-Style Masala Sandwich</h4>
-              <p class="text-on-surface-variant line-clamp-3 mb-6">The ultimate Mumbai morning staple. Quick, spicy, and perfectly toasted even on a flat pan.</p>
-            </div>
-            <button class="w-full bg-gradient-to-br from-[#9c3f00] to-[#ff7a2f] text-white py-4 rounded-full font-bold flex items-center justify-center gap-2 hover:scale-[1.02] transition-transform">
-              Cook Now <span class="material-symbols-outlined">bolt</span>
-            </button>
-          </div>
-        </article>
-
-        <!-- Right Bento List -->
-        <div class="lg:col-span-5 grid grid-cols-1 gap-6">
-          <div class="bg-surface-container-lowest p-4 rounded-xl flex items-center gap-4 group cursor-pointer hover:bg-surface-container transition-colors shadow-[0px_20px_40px_rgba(41,48,50,0.06)]" onclick="openRecipe('chilla')">
-            <div class="w-24 h-24 rounded-lg overflow-hidden shrink-0">
-              <img class="w-full h-full object-cover group-hover:scale-110 transition-all"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBemxyTGQT6oNV_rmor_Y_e69r8K-Vl3Hg6i8uJvaOvX90KhfYRitphrehX7HBaee3XsWSY3GPLGm96q-zm1C9TOH7EXn3MVIZYsawRs0zVnV5s4L99QbclO_2OAMnvkp2qHM2l0Pu_Cba35cjQA0p0O7woeJZgzu79dAq__fDYXdukTLbl3ltpjvfmnmVJOcfF6ApdgCuiLu3oFRFQt3ePmqBx28gAsiuQxVQvQDOWPbQAuJWteBg53uNYoQo5sBXYCfK0bbwG3Jw"
-                alt="Oats Chilla"/>
-            </div>
-            <div class="flex-1">
-              <div class="flex justify-between items-start mb-1">
-                <h5 class="font-bold text-lg leading-tight">Instant Oats Chilla</h5>
-                <span class="material-symbols-outlined text-primary text-xl" style="font-variation-settings: 'FILL' 1;">favorite</span>
-              </div>
-              <div class="flex gap-4 text-xs font-bold text-outline-variant uppercase">
-                <span>5 MINS</span>
-                <span class="text-secondary">EASY</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="bg-surface-container-lowest p-4 rounded-xl flex items-center gap-4 group cursor-pointer hover:bg-surface-container transition-colors shadow-[0px_20px_40px_rgba(41,48,50,0.06)]" onclick="openRecipe('poha')">
-            <div class="w-24 h-24 rounded-lg overflow-hidden shrink-0">
-              <img class="w-full h-full object-cover group-hover:scale-110 transition-all"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzFz6vzhUTOFyRILrlOkVEIo-Zg0a39dGcAckI-UnAsg80L8ZWu-fYH-RyMrfgXv_GlO6psiFMy6W0x2pW6JmE1UiTMUtZu1p_HPlxXzeI_wT-7PNw5LKG8-vdk8OhPGPXIQ7A_Vb669ZOYKroe3C1w2zPv2HO6JXVNgmL2CEsYLe3E8-MJjzHZLrPUJRRLIcDMPVVO1hz5cr_noY4h3TfNH7G9ZUmw1jbRlVx-3vYIt9Kcfs0_wjsAPYsEyXZubofaNIJdlDzCHQ"
-                alt="Indori Poha"/>
-            </div>
-            <div class="flex-1">
-              <div class="flex justify-between items-start mb-1">
-                <h5 class="font-bold text-lg leading-tight">Indori Poha</h5>
-                <span class="material-symbols-outlined text-outline-variant text-xl">favorite</span>
-              </div>
-              <div class="flex gap-4 text-xs font-bold text-outline-variant uppercase">
-                <span>15 MINS</span>
-                <span class="text-primary-container">MEDIUM</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="bg-surface-container-lowest p-4 rounded-xl flex items-center gap-4 group cursor-pointer hover:bg-surface-container transition-colors shadow-[0px_20px_40px_rgba(41,48,50,0.06)]" onclick="openRecipe('paratha')">
-            <div class="w-24 h-24 rounded-lg overflow-hidden shrink-0">
-              <img class="w-full h-full object-cover group-hover:scale-110 transition-all"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKy8dZ1kU-P24RSYVR9ckHNKynLRhGD89S9Diht2i3W8cg5GHpi5CKTA8iVM3ggOFFY8F26MvSWWfqBbKpZW59AAEhlUDpxv_lgqlx7PlbCZw3NcXb-lE2y1fE31lL0VmFf-LFbpumDEUb_EOvvtSMVqX5OWyD5UNkOLlDynUPjX7KOatpLFfLRFevGQOtSrgi16TdR_206OrOakoUAt9lRmqFs-7zE_pQK2ct3dfsKFjrsbuloCFxx4UmvYQKhwhiQRWK4YqXlMo"
-                alt="Aloo Paratha"/>
-            </div>
-            <div class="flex-1">
-              <div class="flex justify-between items-start mb-1">
-                <h5 class="font-bold text-lg leading-tight">5-Min Aloo Paratha Hack</h5>
-                <span class="material-symbols-outlined text-outline-variant text-xl">favorite</span>
-              </div>
-              <div class="flex gap-4 text-xs font-bold text-outline-variant uppercase">
-                <span>5 MINS</span>
-                <span class="text-secondary">EASY</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Saved Recipes Teaser — Bento Grid -->
-  <section class="px-6 mb-20">
-    <div class="max-w-7xl mx-auto">
-      <div class="flex items-center justify-between mb-8">
-        <div class="flex items-center gap-3">
-          <span class="material-symbols-outlined text-primary">bolt</span>
-          <h3 class="font-headline font-bold text-2xl uppercase tracking-widest">My 5-Min Staples</h3>
-        </div>
-        <button class="text-primary font-bold hover:underline flex items-center gap-2">
-          View all <span class="material-symbols-outlined text-sm">arrow_forward</span>
-        </button>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
-        <!-- Big Saved Card -->
-        <div class="md:col-span-8 group relative overflow-hidden rounded-xl bg-surface-container-lowest shadow-[0px_20px_40px_rgba(41,48,50,0.06)] transition-all hover:-translate-y-2 cursor-pointer" onclick="openRecipe('pb')">
-          <div class="aspect-[16/9] overflow-hidden">
-            <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCV4aMez7Jcd-mrfPcVpjG-s_pWP9Vl4kB8-Wiis6tAL8o-S2dLQ13vpxDhoB5csXhBf9d2-FCRqiQ9hDqJxA_pSrR5FeH63-_oJvIAsCbMp-AIRSSyzujXo7Bwu2Gwpkm2IZ2eSAM4hclcfgdBa73OqLCoRFx4m_XK80oKr80bOTha-_Q0KwBMa11dEAneeY1tBD-kDPHD4HAmM9Dlfr6jlrYPjNHJ4FMNpAQxDX1MycfjQu8jCAbaneUwrgZVZ91ovbSB9yReDNA"
-              alt="Quick Recipe"/>
-          </div>
-          <div class="p-8">
-            <div class="flex gap-2 mb-4">
-              <span class="px-4 py-1 rounded-full bg-tertiary-container text-on-tertiary-container text-[10px] font-bold uppercase tracking-widest">5 MINS</span>
-              <span class="px-4 py-1 rounded-full bg-secondary-container text-on-secondary-container text-[10px] font-bold uppercase tracking-widest flex items-center gap-1">
-                <span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span> 4.9
-              </span>
-            </div>
-            <h4 class="font-headline font-extrabold text-3xl mb-2 text-on-surface">Peanut Butter Power Bowl</h4>
-            <p class="text-on-surface-variant font-body">The ultimate survival meal between lectures. Oats, PB, banana, honey. Nutritious and lightning fast.</p>
-          </div>
-          <button class="absolute top-6 right-6 w-12 h-12 rounded-full bg-white/90 backdrop-blur-md flex items-center justify-center text-primary shadow-lg hover:scale-110 transition-transform">
-            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">favorite</span>
-          </button>
-        </div>
-
-        <!-- Vertical Saved Card -->
-        <div class="md:col-span-4 group relative overflow-hidden rounded-xl bg-surface-container-lowest shadow-[0px_20px_40px_rgba(41,48,50,0.06)] transition-all hover:-translate-y-2 cursor-pointer" onclick="openRecipe('berry')">
-          <div class="h-full flex flex-col">
-            <div class="flex-grow overflow-hidden h-48 md:h-auto">
-              <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQOLhc0XyiB4e3oTIay29iRMI48Oy5jxzEnqmsw4zOjhIS88KHYGm66VI3AmQDtkQkhCXUfwPEamNWxd_OufwTkfh2AIFGR4IGllbmIF4vo_E9OgrHpDEUlBfGKpANWz7nHeLQfN_pp-LeTIWjIvYNQLRnKKHGOW1n_Ne0_XRVjcJ48CsWV3ZlTTxQHBmNFL4kYmLmfWhzGuAbNZRLu-g98LpxtKJhIY5PqsH_N9vNyiGE51b2fqis248f6AHnd_n7Fg9udm45c0E"
-                alt="Smoothie Bowl"/>
-            </div>
-            <div class="p-8">
-              <div class="flex gap-2 mb-4">
-                <span class="px-4 py-1 rounded-full bg-tertiary-container text-on-tertiary-container text-[10px] font-bold uppercase tracking-widest">3 MINS</span>
-              </div>
-              <h4 class="font-headline font-bold text-xl mb-2 text-on-surface">Speedy Chickpea Bowl</h4>
-              <div class="flex items-center gap-1 text-on-secondary-container font-bold">
-                <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span> 4.7
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 3 small horizontal cards -->
-        <div class="md:col-span-4 group overflow-hidden rounded-xl bg-surface-container-low transition-all hover:bg-surface-container-lowest p-6 flex items-center gap-6 cursor-pointer" onclick="openRecipe('sandwich')">
-          <div class="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0">
-            <img class="w-full h-full object-cover"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1fDg9zIHPvyjM1V28WiPuU5xMnnrQeCEVwvOWybuhCz3JM_quUhxUhFsUb-LmaYBkowogqaQqnZeXxr8O_4QZ749wItovhhJ4ELxPER6-r92bfH3STfnTno_e_62oR2Bht0HSH-Ki6zG2--2qz3FDMCzmMm-Wm4COW8603o0V_0R-dUHhf_Qd2GbHaVne01taAzah-IkIs5FlhI6AzXqCYhoYCT331wx07RN8KujBLEsqR0GXW5Y6i_Da1yZOnJD8hC652L1gO-I"
-              alt="Avo Toast"/>
-          </div>
-          <div>
-            <div class="text-[10px] font-bold text-primary mb-1 uppercase tracking-tighter">4 MINS • 4.8 ★</div>
-            <h4 class="font-headline font-bold text-lg text-on-surface leading-tight">Elite Avo Crunch</h4>
-          </div>
-        </div>
-
-        <div class="md:col-span-4 group overflow-hidden rounded-xl bg-surface-container-low transition-all hover:bg-surface-container-lowest p-6 flex items-center gap-6 cursor-pointer" onclick="openRecipe('berry')">
-          <div class="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0">
-            <img class="w-full h-full object-cover"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBILb70qQAZ6gI2OuimDs4mP6cDQoRgMdlYHfOgywPyX5bgioAPxirRLbqTqTwY2cI1SuCdP9kQmNyETcBy_hmCun9cxLDQrkGtNT1kC9n20FF1QzS3efe6Q2wkka83DDesNm0nQcdylKTLpz5q0_Rg4A_AmoT8d6V_cpBEwOBxXrqNNbPQNFYS-E1JsCkKnl-vOPv-iVyyt2CQSYw7iUZoQDTPELf7nLZRr9v7o1QakOt5WWHqJbkxR64apTQ6xoKRhyqc6vDnE8o"
-              alt="Berry Smoothie"/>
-          </div>
-          <div>
-            <div class="text-[10px] font-bold text-primary mb-1 uppercase tracking-tighter">2 MINS • 5.0 ★</div>
-            <h4 class="font-headline font-bold text-lg text-on-surface leading-tight">Midnight Berry Rush</h4>
-          </div>
-        </div>
-
-        <div class="md:col-span-4 group overflow-hidden rounded-xl bg-surface-container-low transition-all hover:bg-surface-container-lowest p-6 flex items-center gap-6 cursor-pointer" onclick="openRecipe('omelette')">
-          <div class="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0">
-            <img class="w-full h-full object-cover"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFvBMiSE-2acEwB6s_NGEsAC8jzIor7XouqC8TWAGbRg9nIOn2MCj9IKS_dKkJwXlZHcsctyFoqe_auTtSIy6heFRhJEUBll4yR1B9_YI8haFS55nq-TQ4n0cfhlZhF4zuKy9W0NdOvZ9ZoSnHVvJMZJ1J_J12dToL42SxQTH2aIHRg_9I5hqmPCOMaQXQLpXcvsGlGijtCigt3d2DyslHFhaywIZZYV2KgmpjxXJIiosgvxnl29s4BmHz5sCWHVl67K7ESfrxeow"
-              alt="Egg Bun"/>
-          </div>
-          <div>
-            <div class="text-[10px] font-bold text-primary mb-1 uppercase tracking-tighter">5 MINS • 4.6 ★</div>
-            <h4 class="font-headline font-bold text-lg text-on-surface leading-tight">Aloo Tikki Burger</h4>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA Banner -->
-  <section class="px-6">
-    <div class="max-w-7xl mx-auto">
-      <div class="flex flex-col items-center text-center py-16 bg-surface-container-low rounded-xl">
-        <div class="w-24 h-24 bg-surface-container rounded-full flex items-center justify-center mb-6 text-5xl">🍳</div>
-        <h3 class="font-headline font-extrabold text-3xl text-on-surface mb-2">Haven't saved anything yet?</h3>
-        <p class="text-on-surface-variant max-w-sm mb-8">Save your favorite 5-minute meals and student hacks to find them easily when hunger strikes.</p>
-        <button onclick="document.getElementById('all-recipes').scrollIntoView({ behavior: 'smooth' })" class="bg-gradient-to-br from-primary to-primary-container text-white px-10 py-4 rounded-full font-headline font-bold text-lg shadow-xl scale-100 hover:scale-105 active:scale-95 transition-all">
-          Browse All Recipes
-        </button>
-      </div>
-    </div>
-  </section>
-
-</main>
-
-<!-- Bottom Navigation Bar -->
-<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-6 pt-2 bg-[#f1f8fa]/70 backdrop-blur-xl rounded-t-[3rem] shadow-[0px_-10px_30px_rgba(41,48,50,0.04)] no-line-rule tonal-shift-only z-50">
-  <a class="flex flex-col items-center justify-center bg-gradient-to-br from-[#9c3f00] to-[#ff7a2f] text-white rounded-full px-6 py-2 scale-110 transition-transform duration-300 ease-out" href="#">
-    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
-    <span class="font-['Be_Vietnam_Pro'] text-[10px] uppercase tracking-widest font-bold">Home</span>
-  </a>
-  <a class="flex flex-col items-center justify-center text-on-surface p-2 hover:text-[#FF6B00] transition-colors" href="#">
-    <span class="material-symbols-outlined">explore</span>
-    <span class="font-['Be_Vietnam_Pro'] text-[10px] uppercase tracking-widest font-bold">Browse</span>
-  </a>
-  <a class="flex flex-col items-center justify-center text-on-surface p-2 hover:text-[#FF6B00] transition-colors" href="#">
-    <span class="material-symbols-outlined">favorite</span>
-    <span class="font-['Be_Vietnam_Pro'] text-[10px] uppercase tracking-widest font-bold">Saved</span>
-  </a>
-  <a class="flex flex-col items-center justify-center text-on-surface p-2 hover:text-[#FF6B00] transition-colors" href="#">
-    <span class="material-symbols-outlined">person</span>
-    <span class="font-['Be_Vietnam_Pro'] text-[10px] uppercase tracking-widest font-bold">Profile</span>
-  </a>
-</nav>
-
-<!-- FAB -->
-<button class="fixed right-6 bottom-24 md:bottom-10 bg-primary-container text-on-primary-container w-14 h-14 rounded-full flex items-center justify-center shadow-[0px_20px_40px_rgba(41,48,50,0.15)] hover:rotate-12 transition-all z-40">
-  <span class="material-symbols-outlined">add</span>
-</button>
-
-<!-- Recipe Detail Modal -->
-<div id="recipe-modal" class="fixed inset-0 z-[100] hidden" onclick="if(event.target===this) closeModal()">
-  <!-- Backdrop -->
-  <div class="absolute inset-0 bg-on-surface/40 backdrop-blur-sm"></div>
-  <!-- Sheet -->
-  <div id="modal-sheet" class="absolute bottom-0 left-0 right-0 max-h-[92dvh] bg-surface rounded-t-[3rem] overflow-y-auto shadow-[0px_-20px_60px_rgba(41,48,50,0.18)] translate-y-full transition-transform duration-300 ease-out">
-    <!-- Handle -->
-    <div class="flex justify-center pt-4 pb-2">
-      <div class="w-12 h-1.5 bg-outline-variant rounded-full"></div>
-    </div>
-    <!-- Close button -->
-    <button onclick="closeModal()" class="absolute top-5 right-6 w-10 h-10 rounded-full bg-surface-container flex items-center justify-center hover:bg-surface-container-high transition-colors">
-      <span class="material-symbols-outlined text-on-surface-variant">close</span>
-    </button>
-
-    <div class="px-6 pb-32">
-      <!-- Hero image -->
-      <div class="relative rounded-xl overflow-hidden mb-6 aspect-video">
-        <img id="modal-img" src="" alt="" class="w-full h-full object-cover"/>
-        <div class="absolute inset-0 bg-gradient-to-t from-on-surface/40 to-transparent"></div>
-        <div id="modal-badges" class="absolute top-4 left-4 flex gap-2"></div>
-      </div>
-
-      <!-- Title & meta -->
-      <div class="flex justify-between items-start mb-2">
-        <h2 id="modal-title" class="font-headline font-extrabold text-3xl leading-tight text-on-surface flex-1 pr-4"></h2>
-        <button class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center text-primary flex-shrink-0 hover:bg-surface-container-high transition-colors">
-          <span class="material-symbols-outlined">favorite_border</span>
-        </button>
-      </div>
-      <p id="modal-desc" class="text-on-surface-variant mb-6 leading-relaxed"></p>
-
-      <!-- Stats row -->
-      <div id="modal-stats" class="flex gap-3 mb-8"></div>
-
-      <!-- Ingredients -->
-      <div class="mb-8">
-        <h3 class="font-headline font-bold text-xl mb-4 flex items-center gap-2">
-          <span class="material-symbols-outlined text-primary">grocery</span> Ingredients
-        </h3>
-        <ul id="modal-ingredients" class="flex flex-col gap-3"></ul>
-      </div>
-
-      <!-- Steps -->
-      <div class="mb-8">
-        <h3 class="font-headline font-bold text-xl mb-4 flex items-center gap-2">
-          <span class="material-symbols-outlined text-primary">format_list_numbered</span> Steps
-        </h3>
-        <ol id="modal-steps" class="flex flex-col gap-4"></ol>
-      </div>
-
-      <!-- Cook Now CTA -->
-      <button class="w-full bg-gradient-to-br from-[#9c3f00] to-[#ff7a2f] text-white py-4 rounded-full font-bold text-lg flex items-center justify-center gap-2 shadow-lg hover:scale-[1.02] transition-transform">
-        I'm Cooking This! <span class="material-symbols-outlined">bolt</span>
-      </button>
-    </div>
-  </div>
-</div>
-
-<!-- Footer -->
-<footer class="bg-surface-container-low py-8 px-6 text-center mt-4">
-  <p class="text-on-surface-variant text-sm font-body">
-    Made with <span class="text-primary font-bold">♥</span> by <span class="font-headline font-bold text-on-surface">Bhagyashree Soni</span>
-  </p>
-  <p class="text-outline text-xs mt-1">© Culinary Kinetic </p>
-</footer>
-
-<script>
-  const recipes = {
-    poha: {
-      title: "Instant Poha",
-      desc: "The classic student staple. Flattened rice tempered with peanuts and curry leaves. No boiling required!",
-      img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCfIZBuL2haJdYWBGTfaKeHo975PqZqUjJSCHkXoLNuIB03twbjXgYZHLpuE75qeSDZTQC10flivfitcMC6SXMeplPX9X5CyLlHtpDAUqEQK4zeOkNAoC11eIQgm8qgMC8BFW-apt5ypXzATFVAy5r8y6BQtQuiEuwuFsvL9R_t-hbm-LGcybVIdkSKGRaKboaExzUM6jTlD1HM-fhJy5ZvnxC8JIuA2UpL5QpzC9AmPmYB8kAAXQRmkHkDOiGoiT1NaeOm2MBX2PA",
-      time: "10 MIN", cal: "280", badge: "Best Seller",
-      ingredients: ["1 cup flattened rice (poha)", "2 tbsp oil", "1 tsp mustard seeds", "1 onion, chopped", "2 green chilies", "¼ cup roasted peanuts", "½ tsp turmeric", "Salt to taste", "Fresh coriander & lime to serve"],
-      steps: ["Rinse poha in a strainer under water for 30 sec. Drain and set aside.", "Heat oil in a pan. Add mustard seeds — wait for them to splutter.", "Add green chilies and onion. Sauté 2 mins until soft.", "Add peanuts, turmeric and salt. Mix well.", "Add drained poha and gently toss everything together.", "Cover for 1 min on low heat. Garnish with coriander and squeeze of lime."]
-    },
-    upma: {
-      title: "Microwave Upma",
-      desc: "Semolina upma made entirely in the microwave. No watching the stove — just mix and nuke.",
-      img: "https://lh3.googleusercontent.com/aida-public/AB6AXuAyngVYA5S9k2kFMgzRXDw8ljdhqUOOob2jpDSlWE1JUSArwXvTlPfACyDREeJ9BZ90EUSmYYoETv0Wl7z8d3RMpTarTmaxa3Ex8JrSW6-GUhAMQFZEvoznzt3v8Y9q8UgxAm_J3WQSoSTRDqpOrlabeiEAnXZG92vaSjzzd20F0oxydr3Ui1gH3aBT6SDBfJn_ytFFqDScmxXVx197iubCcexfVxb_CkTr0FMk-AkunVu6UW1gwjekrSDz2veZlynnxTl5-jOi6Gk",
-      time: "8 MIN", cal: "260", badge: "Microwave",
-      ingredients: ["½ cup semolina (rava)", "1 cup water", "1 tbsp oil or ghee", "1 tsp mustard seeds", "1 small onion, chopped", "Mixed veggies (peas, carrots)", "Salt & pepper", "Curry leaves (optional)"],
-      steps: ["Dry roast semolina in microwave for 2 mins, stirring every 30 sec. Keep aside.", "In a microwave-safe bowl, add oil, mustard seeds and onion. Microwave 2 mins.", "Add veggies, salt and water. Microwave 3 mins.", "Stir in roasted semolina quickly — no lumps!", "Microwave 2 more mins. Stir once midway.", "Rest 1 min, fluff and serve hot."]
-    },
-    sandwich: {
-      title: "Street-Style Masala Sandwich",
-      desc: "The ultimate Mumbai morning staple. Quick, spicy, and perfectly toasted even on a flat pan.",
-      img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCV-WDlIxefnuld4ruhbIab9dNpGrI7WgQbdyHyZab8fytTU8W0rpieFPhxkjSTEd-QxD5aYa2eHhsuuit_Vj-i0UmexpubksDtTQN2WIfRjPuAVj1oK4dQ3hLKCiVLZ132jpVQDFzJHvNOMkGbdYcg6IXKCi4rsGaLw18BRNQPvdeJRDdZWDCJqSrBS3G8m71swSrhCoBOixKuiezdX-97iG4LAudtEu2dYZ0h-oBt7W4GcCu4JW7GemGVXNdSSGTPJgikJqrtmtk",
-      time: "10 MIN", cal: "310", badge: "Pantry Hero",
-      ingredients: ["4 slices bread", "1 boiled potato, sliced", "1 tomato, sliced", "Green chutney (store-bought OK)", "Butter", "Chaat masala", "Salt & red chili powder"],
-      steps: ["Butter both sides of each bread slice generously.", "Spread green chutney on one side.", "Layer with potato slices and tomato.", "Sprinkle chaat masala, salt and chili powder.", "Close sandwich. Toast on a flat pan over medium heat 2 mins each side.", "Press down with spatula until golden and crispy. Serve hot."]
-    },
-    omelette: {
-      title: "Aloo Tikki Burger",
-      desc: "Crispy aloo tikki layered with onion, tomato, and mint chutney in a toasted bun. Street-style flavor in minutes.",
-      img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBFvBMiSE-2acEwB6s_NGEsAC8jzIor7XouqC8TWAGbRg9nIOn2MCj9IKS_dKkJwXlZHcsctyFoqe_auTtSIy6heFRhJEUBll4yR1B9_YI8haFS55nq-TQ4n0cfhlZhF4zuKy9W0NdOvZ9ZoSnHVvJMZJ1J_J12dToL42SxQTH2aIHRg_9I5hqmPCOMaQXQLpXcvsGlGijtCigt3d2DyslHFhaywIZZYV2KgmpjxXJIiosgvxnl29s4BmHz5sCWHVl67K7ESfrxeow",
-      time: "7 MIN", cal: "360", badge: "Street Favorite",
-      ingredients: ["2 burger buns", "2 aloo tikki patties", "1 small onion, sliced", "1 tomato, sliced", "Mint chutney", "Tomato ketchup", "Butter", "Salt and chaat masala"],
-      steps: ["Toast burger buns on a pan with a little butter until golden.", "Cook aloo tikki patties on medium heat until crispy on both sides.", "Spread mint chutney on one bun half and ketchup on the other.", "Place the hot tikki on the base bun.", "Top with onion and tomato slices, then sprinkle a little chaat masala.", "Close the burger, press lightly, and serve hot."]
-    },
-    chilla: {
-      title: "Instant Oats Chilla",
-      desc: "Savory oat pancakes with grated carrots and green chilies. High-fiber, no maida.",
-      img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBemxyTGQT6oNV_rmor_Y_e69r8K-Vl3Hg6i8uJvaOvX90KhfYRitphrehX7HBaee3XsWSY3GPLGm96q-zm1C9TOH7EXn3MVIZYsawRs0zVnV5s4L99QbclO_2OAMnvkp2qHM2l0Pu_Cba35cjQA0p0O7woeJZgzu79dAq__fDYXdukTLbl3ltpjvfmnmVJOcfF6ApdgCuiLu3oFRFQt3ePmqBx28gAsiuQxVQvQDOWPbQAuJWteBg53uNYoQo5sBXYCfK0bbwG3Jw",
-      time: "5 MIN", cal: "220", badge: "5 Mins",
-      ingredients: ["½ cup rolled oats (blended to powder)", "2 tbsp yogurt", "¼ cup water", "1 small onion, grated", "1 carrot, grated", "1 green chili, chopped", "Salt to taste", "Oil for cooking"],
-      steps: ["Blend oats into a coarse powder.", "Mix oat powder, yogurt, water, onion, carrot, chili and salt into a batter.", "Let rest 2 mins — batter should be pourable, not too thick.", "Heat a non-stick pan, grease lightly with oil.", "Pour batter and spread into a thin circle.", "Cook 2 mins each side until golden. Serve with chutney."]
-    },
-    paratha: {
-      title: "5-Min Aloo Paratha Hack",
-      desc: "Use leftover boiled potatoes and ready-made dough or bread for this speed-hack version.",
-      img: "https://lh3.googleusercontent.com/aida-public/AB6AXuAKy8dZ1kU-P24RSYVR9ckHNKynLRhGD89S9Diht2i3W8cg5GHpi5CKTA8iVM3ggOFFY8F26MvSWWfqBbKpZW59AAEhlUDpxv_lgqlx7PlbCZw3NcXb-lE2y1fE31lL0VmFf-LFbpumDEUb_EOvvtSMVqX5OWyD5UNkOLlDynUPjX7KOatpLFfLRFevGQOtSrgi16TdR_206OrOakoUAt9lRmqFs-7zE_pQK2ct3dfsKFjrsbuloCFxx4UmvYQKhwhiQRWK4YqXlMo",
-      time: "5 MIN", cal: "350", badge: "Quick",
-      ingredients: ["2 leftover boiled potatoes", "Pinch of chili powder, cumin, salt", "2 ready-made roti or bread slices", "Butter or ghee", "Pickle (optional)"],
-      steps: ["Mash potatoes with chili powder, cumin and salt.", "Spread potato filling generously on one roti/bread.", "Place another roti/bread on top and press firmly.", "Heat a pan with butter. Place paratha.", "Cook 2 mins each side pressing down until crispy.", "Cut and serve with yogurt and pickle."]
-    },
-    pb: {
-      title: "Peanut Butter Power Bowl",
-      desc: "Oats, PB, banana and honey. The ultimate 5-minute survival meal between lectures.",
-      img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCV4aMez7Jcd-mrfPcVpjG-s_pWP9Vl4kB8-Wiis6tAL8o-S2dLQ13vpxDhoB5csXhBf9d2-FCRqiQ9hDqJxA_pSrR5FeH63-_oJvIAsCbMp-AIRSSyzujXo7Bwu2Gwpkm2IZ2eSAM4hclcfgdBa73OqLCoRFx4m_XK80oKr80bOTha-_Q0KwBMa11dEAneeY1tBD-kDPHD4HAmM9Dlfr6jlrYPjNHJ4FMNpAQxDX1MycfjQu8jCAbaneUwrgZVZ91ovbSB9yReDNA",
-      time: "5 MIN", cal: "420", badge: "5 Mins",
-      ingredients: ["½ cup rolled oats", "1 cup milk or water", "2 tbsp peanut butter", "1 banana, sliced", "1 tsp honey", "Pinch of cinnamon (optional)"],
-      steps: ["Microwave oats with milk/water for 2 mins. Stir once halfway.", "Stir in peanut butter while hot — it will melt in smoothly.", "Top with banana slices.", "Drizzle honey on top.", "Sprinkle cinnamon if you have it.", "Eat immediately or pack in a container."]
-    },
-    berry: {
-      title: "Midnight Berry Rush Smoothie",
-      desc: "Frozen berries, yogurt and banana blended in 2 minutes. No cooking, no heating.",
-      img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBILb70qQAZ6gI2OuimDs4mP6cDQoRgMdlYHfOgywPyX5bgioAPxirRLbqTqTwY2cI1SuCdP9kQmNyETcBy_hmCun9cxLDQrkGtNT1kC9n20FF1QzS3efe6Q2wkka83DDesNm0nQcdylKTLpz5q0_Rg4A_AmoT8d6V_cpBEwOBxXrqNNbPQNFYS-E1JsCkKnl-vOPv-iVyyt2CQSYw7iUZoQDTPELf7nLZRr9v7o1QakOt5WWHqJbkxR64apTQ6xoKRhyqc6vDnE8o",
-      time: "2 MIN", cal: "280", badge: "No-Cook",
-      ingredients: ["½ cup frozen mixed berries", "1 banana", "½ cup yogurt", "¼ cup milk", "1 tsp honey", "Granola for topping (optional)"],
-      steps: ["Add all ingredients except granola to a blender.", "Blend on high for 30–45 seconds until smooth.", "Taste — add more honey if needed.", "Pour into a bowl or glass.", "Top with granola for crunch.", "Drink or eat immediately."]
-    },
-    
-  };
-
-  function openRecipe(key) {
-    const r = recipes[key];
-    if (!r) return;
-    document.getElementById('modal-img').src = r.img;
-    document.getElementById('modal-img').alt = r.title;
-    document.getElementById('modal-title').textContent = r.title;
-    document.getElementById('modal-desc').textContent = r.desc;
-
-    // Stats
-    document.getElementById('modal-stats').innerHTML = `
-      <div class="flex items-center gap-1.5 bg-surface-container px-4 py-2 rounded-full">
-        <span class="material-symbols-outlined text-primary text-[18px]">schedule</span>
-        <span class="font-bold text-sm">${r.time}</span>
-      </div>
-      <div class="flex items-center gap-1.5 bg-surface-container px-4 py-2 rounded-full">
-        <span class="material-symbols-outlined text-tertiary text-[18px]">local_fire_department</span>
-        <span class="font-bold text-sm">${r.cal} cal</span>
-      </div>`;
-
-    // Badge
-    document.getElementById('modal-badges').innerHTML =
-      `<span class="bg-tertiary-container text-on-tertiary-container px-3 py-1 rounded-full text-xs font-bold uppercase">${r.badge}</span>`;
-
-    // Ingredients
-    document.getElementById('modal-ingredients').innerHTML = r.ingredients
-      .map(i => `<li class="flex items-start gap-3 bg-surface-container-low rounded-xl px-4 py-3">
-        <span class="material-symbols-outlined text-primary text-[18px] mt-0.5 flex-shrink-0">check_circle</span>
-        <span class="font-body text-on-surface">${i}</span>
-      </li>`).join('');
-
-    // Steps
-    document.getElementById('modal-steps').innerHTML = r.steps
-      .map((s, i) => `<li class="flex gap-4">
-        <span class="w-8 h-8 bg-gradient-to-br from-[#9c3f00] to-[#ff7a2f] text-white rounded-full flex items-center justify-center font-headline font-bold text-sm flex-shrink-0">${i+1}</span>
-        <p class="font-body text-on-surface leading-relaxed pt-0.5">${s}</p>
-      </li>`).join('');
-
-    // Show modal
-    const modal = document.getElementById('recipe-modal');
-    modal.classList.remove('hidden');
-    setTimeout(() => {
-      document.getElementById('modal-sheet').style.transform = 'translateY(0)';
-    }, 10);
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeModal() {
-    document.getElementById('modal-sheet').style.transform = 'translateY(100%)';
-    setTimeout(() => {
-      document.getElementById('recipe-modal').classList.add('hidden');
-      document.body.style.overflow = '';
-    }, 300);
-  }
-
-  function setupRecipeSearch() {
-    const searchInput = document.getElementById('recipe-search');
-    const recipeGrid = document.getElementById('recipe-grid');
-    const noResults = document.getElementById('no-search-results');
-    if (!searchInput || !recipeGrid) return;
-
-    const cards = Array.from(recipeGrid.querySelectorAll('[onclick^="openRecipe"]'));
-    const normalize = (value) => value.toLowerCase().trim();
-
-    searchInput.addEventListener('input', () => {
-      const query = normalize(searchInput.value);
-      let visibleCount = 0;
-
-      cards.forEach((card) => {
-        const title = card.querySelector('h3, h4, h5')?.textContent || '';
-        const desc = card.querySelector('p')?.textContent || '';
-        const searchableText = normalize(`${title} ${desc}`);
-        const matched = searchableText.includes(query);
-
-        card.classList.toggle('hidden', !matched);
-        if (matched) visibleCount += 1;
-      });
-
-      if (noResults) {
-        noResults.classList.toggle('hidden', visibleCount > 0);
+    @media (max-width: 760px) {
+      .grid {
+        grid-template-columns: 1fr;
       }
-    });
-  }
+    }
 
-  setupRecipeSearch();
-</script>
+    @keyframes fadeUp {
+      from {
+        transform: translateY(12px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero">
+      <h1>Project Home</h1>
+      <p>Yahan se aapki sabhi pages alag-alag open hongi. Ab koi page dusre ke andar merge ya mix nahi hoga.</p>
+    </section>
 
+    <section class="grid">
+      <article class="card">
+        <span class="tag">Attendance</span>
+        <h2>Student Attendance System</h2>
+        <p>Student add/edit, daily attendance marking, history and CSV export.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="Student.html">Open Page</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <span class="tag">Health</span>
+        <h2>Health Dashboard</h2>
+        <p>Health related UI dashboard page, separate standalone screen.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="health.html">Open Page</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <span class="tag">Recipes</span>
+        <h2>Recipe Page</h2>
+        <p>Recipe listing and interactions page, isolated from student system.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="recepic.html">Open Page</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <span class="tag">Home</span>
+        <h2>Main Landing</h2>
+        <p>Ye current Home Hub page hai jahan se sab pages alag-alag access hote hain.</p>
+        <div class="actions">
+          <a class="btn btn-secondary" href="index.html">Reload Home</a>
+        </div>
+      </article>
+    </section>
+
+    <p class="note">Tip: GitHub Pages par ab main URL se ye Home Hub dikhega, aur har card se separate page khulega.</p>
+  </main>
 </body>
 </html>
